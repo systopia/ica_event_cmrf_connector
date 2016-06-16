@@ -88,12 +88,6 @@ function ica_event_cmrf_connector_webform_component_info() {
 
 function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'webform_client_form_1') {
-    // $form['submitted']['discountcode']['#ajax'] = array(
-    //   'callback' => 'ica_event_cmrf_connector_webform_client_form_ajax_callback',
-    //   'wrapper'  => 'webform-client-form-' . $form['#node']->nid . '-wrapper',
-    //   'method'   => 'replace',
-    //   'effect'   => 'fade',
-    //   'event'    => 'change',
     include_once('includes/calculate_registration_fee.inc');
     $form['submitted']['discountcode']['#ajax'] = array(
       'callback' => 'ica_event_caclulate_registration_fee_ajax_callback',
@@ -102,19 +96,13 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
       'method'   => 'replace',
       'effect'   => 'fade',
       'event'    => 'change',
-  );
-
- 
+    );
   }
-
-  error_log("FORM ALTER");
-  // error_log(print_r($form_state,1));
-  // error_log(print_r($form,1));
 }
 
 
 function ica_event_cmrf_connector_webform_client_form_ajax_callback($form, $form_state) {
-  error_log("AJAX");
+  // error_log("AJAX");
   // error_log(print_r($form,1));
   
   // $output = theme('webform_submit_ajax_confirmation', array('form' => $form, 'submitted' => $form_state['values']['submitted']));
