@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @file
- * Install and uninstall code for Custom Module.
- *
- * Long description here.
+ * This file deals with the calculation of the registration fee
  */
+
+module_load_include('inc', 'ica_event_cmrf_connector', 'includes/webform_integration.inc');
 
 /**
  * This is the algorithm to calculate the registration fee for
@@ -15,25 +14,11 @@
  *                'errors'       => array (problems)
  *                'explanations' => array (reasons)
  */
-function ica_event_caclulate_registration_fee(&$form) {
+function ica_event_calculate_registration_fee(&$form, $form_state) {
   $fee = array(
-    'amount'       => 1000.0,
+    'amount'       => 9001.00,
     'errors'       => array(),
     'explanations' => array());
 
-  // test:
-  error_log("NOW");
-
   return $fee;
 }
-
-
-function ica_event_caclulate_registration_fee_ajax_callback($form, $form_state) {
-  $fee = ica_event_caclulate_registration_fee($form);
-
-  $commands = array();
-  $commands[] = ajax_command_replace('#edit-submitted-amount', $fee['amount']);
-  ajax_deliver(array('#type' => 'ajax', '#commands' => $commands));
-  exit;
-}
-

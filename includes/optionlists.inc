@@ -1,11 +1,9 @@
 <?php
 
 /**
- * @file
- * Install and uninstall code for Custom Module.
- *
- * Long description here.
+ * Pull certain dropdown option lists from CiviCMR via CMRF
  */
+
 
 
 /**

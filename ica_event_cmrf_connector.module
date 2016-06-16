@@ -1,11 +1,6 @@
 <?php
 
-/**
- * @file
- * Short file description here.
- *
- * Long description here.
- */
+include_once('includes/webform_integration.inc');
 
 
 /**
@@ -33,6 +28,32 @@ function ica_event_cmrf_connector_sendCall($entity, $action, $parameters, $optio
 }
 
 
+/**
+ * Inject our logic into webform
+ */
+function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == ICA_EVENT_FORM_ID) {
+    // calculate amount
+    if (isset($form['submitted'][ICA_EVENT_AMOUNT])) {
+      include_once('includes/calculate_registration_fee.inc');
+      $fee = ica_event_calculate_registration_fee($form, $form_state);
+      $form['submitted'][ICA_EVENT_AMOUNT]['#value'] = $fee['amount'];
+    }
+
+    if (isset($form['submitted'][ICA_EVENT_DISCOUNTCODE])) {
+      // module_load_include('inc', 'ica_event_cmrf_connector', 'includes/discount_code.inc');
+      include_once('includes/discount_code.inc');
+      $form['submitted'][ICA_EVENT_DISCOUNTCODE]['#ajax'] = array(
+        'callback' => 'ica_event_discount_code_ajax_callback',
+        // 'wrapper'  => 'webform-client-form-' . $form['#node']->nid . '-wrapper',
+        'method'   => 'replace',
+        'effect'   => 'fade',
+        'event'    => 'change',
+      );
+    }
+  }
+}
+
 
 /**
  * Define custom dropdown lists
@@ -51,120 +72,3 @@ function ica_event_cmrf_connector_webform_select_options_info($include_disabled 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// EXPERIMENTS!!
-
-function ica_event_cmrf_connector_component_invoke($type, $callback) {
-  // error_log(print_r($type,1));
-  // error_log(print_r($callback,1));
-}
-
-function ica_event_cmrf_connector_webform_component_info() {
-  // error_log("cinfo");
-  return array();
-}
-
-
-
-
-function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
-  if ($form_id == 'webform_client_form_1') {
-    include_once('includes/calculate_registration_fee.inc');
-    $form['submitted']['discountcode']['#ajax'] = array(
-      'callback' => 'ica_event_caclulate_registration_fee_ajax_callback',
-      'file'     => 'includes/calculate_registration_fee.inc',
-      // 'wrapper'  => 'webform-client-form-' . $form['#node']->nid . '-wrapper',
-      'method'   => 'replace',
-      'effect'   => 'fade',
-      'event'    => 'change',
-    );
-  }
-}
-
-
-function ica_event_cmrf_connector_webform_client_form_ajax_callback($form, $form_state) {
-  // error_log("AJAX");
-  // error_log(print_r($form,1));
-  
-  // $output = theme('webform_submit_ajax_confirmation', array('form' => $form, 'submitted' => $form_state['values']['submitted']));
-
-  $commands = array();
-  $commands[] = ajax_command_replace('#edit-submitted-discountcode', "NASE");
-  ajax_deliver(array('#type' => 'ajax', '#commands' => $commands));
-  exit;
-
-  // return;
-  // // If this is left out, the confirmation screen will show even when the form fails validation.
-  // if (form_get_errors()) {
-  //   return $form;
-  // }
-  
-  // // Calling this function will flush out the status messages to prevent the default Webform message from displaying on the next
-  // // page load.
-  // $hide_webform_messages = drupal_get_messages();
-
-  // // Ajax Confirmation screen is kept in a template to separate logic and markup. The template is passed the $form and the webform
-  // // submitted values in order to print a confirmation screen.
-  // $output = theme('webform_submit_ajax_confirmation', array('form' => $form, 'submitted' => $form_state['values']['submitted']));
-  
-  
-  // ajax_deliver(array('#type' => 'ajax', '#commands' => $commands));
-  // exit;
-  
-}
-
-// function ica_event_cmrf_connector_components($include_disabled = FALSE, $reset = FALSE) {
-  // static $components, $disabled;
-  // error_log("components");
-
-  // if (!isset($components) || $reset) {
-  //   $components = array();
-  //   $disabled = array_flip(variable_get('webform_disabled_components', array()));
-  //   foreach (module_implements('webform_component_info') as $module) {
-  //     $module_components = module_invoke($module, 'webform_component_info');
-  //     foreach ($module_components as $type => $info) {
-  //       $module_components[$type]['module'] = $module;
-  //       $module_components[$type]['enabled'] = !array_key_exists($type, $disabled);
-  //     }
-  //     $components += $module_components;
-  //   }
-  //   drupal_alter('webform_component_info', $components);
-  //   ksort($components);
-  // }
-
-  // return $include_disabled ? $components : array_diff_key($components, $disabled);
-// }
-
-/**
- * Implements hook_menu().
- */
-// function ica_event_cmrf_connector_menu() {
-//   error_log("module_menu");
-//   $items['example'] = array(
-//     'title' => 'Example Page',
-//     'page callback' => 'custom_module_page',
-//     'access arguments' => array('access content'),
-//     'type' => MENU_NORMAL_ITEM,
-//   );
-
-//   return $items;
-// }
