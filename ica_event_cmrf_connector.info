@@ -1,0 +1,12 @@
+name = ICA Event CMRF Connector
+description = Will connect to CMRF core for submission
+core = 7.x
+dependencies[] = webform
+dependencies[] = cmrf_core
+
+; Information added by Drupal.org packaging script on 2014-10-18
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "ica_event_cmrf_connector"
+datestamp = "1413658731"
+

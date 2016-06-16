@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall code for Custom Module.
+ *
+ * Long description here.
+ */
+
+
+/**
+ * Implements hook_install().
+ */
+function ica_event_cmrf_connector_install() {
+
+  // Do some things on install, like setting the module weight.
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ica_event_cmrf_connector_uninstall() {
+
+  // Do some things on uninstall, like deleting all variables.
+}
