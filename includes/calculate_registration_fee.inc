@@ -4,7 +4,7 @@
  * This file deals with the calculation of the registration fee
  */
 
-module_load_include('inc', 'ica_event_cmrf_connector', 'includes/webform_integration.inc');
+include_once('webform_integration.inc');
 
 /**
  * This is the algorithm to calculate the registration fee for

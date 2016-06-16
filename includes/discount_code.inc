@@ -4,7 +4,7 @@
  * This file deals with discount codes
  */
 
-include_once('includes/webform_integration.inc');
+include_once('webform_integration.inc');
 
 
 /**
