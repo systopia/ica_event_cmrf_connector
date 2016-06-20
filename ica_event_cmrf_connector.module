@@ -32,7 +32,7 @@ function ica_event_cmrf_connector_sendCall($entity, $action, $parameters, $optio
  * Inject our logic into webform
  */
 function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
-  if ($form_id == ICA_EVENT_FORM_ID) {
+  if (in_array($form_id, explode(',', ICA_EVENT_FORM_IDS))) {
     // calculate amount
     if (isset($form['submitted'][ICA_EVENT_AMOUNT])) {
       include_once('includes/calculate_registration_fee.inc');
