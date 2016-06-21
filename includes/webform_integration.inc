@@ -10,6 +10,7 @@ define('ICA_EVENT_DISCOUNTCODE',       'discount_code');
 
 // relevant fields for price calculation
 define('ICA_EVENT_SPOUSE',             'accompanied_by_spouse_partner');
+define('ICA_REGISTRANT_ATTENDING',     'will_you_be_attending_the_conference_group_contact');
 define('ICA_EVENT_YOUTH',              'youth_y_n');
 define('ICA_MEMBER_ORGANISATION',      'which_member_organisation_of_the_international_co_operative_alliance_are_you_representing');
 

@@ -29,7 +29,7 @@ function ica_event_cmrf_connector_sendCall($entity, $action, $parameters, $optio
 
 
 /**
- * Inject our logic into webform
+ * Include our logic into (web)form
  */
 function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
   if (in_array($form_id, explode(',', ICA_EVENT_FORM_IDS))) {
@@ -40,8 +40,8 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
       $form['submitted'][ICA_EVENT_AMOUNT]['#value'] = $fee['amount'];
     }
 
+    // insert lookup logic for discount code
     if (isset($form['submitted'][ICA_EVENT_DISCOUNTCODE])) {
-      // module_load_include('inc', 'ica_event_cmrf_connector', 'includes/discount_code.inc');
       include_once('includes/discount_code.inc');
       $form['submitted'][ICA_EVENT_DISCOUNTCODE]['#ajax'] = array(
         'callback' => 'ica_event_discount_code_ajax_callback',

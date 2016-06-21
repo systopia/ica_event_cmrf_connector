@@ -36,29 +36,32 @@ function ica_event_calculate_registration_fee(&$form, $form_state) {
   $local_organisation = ica_event_is_local_member_org($organisation_id);
 
   // first, process the main contact
-  $main_contact_youth = ica_event_get_form_value(ICA_EVENT_YOUTH, $form, $form_state);
-  if ($main_contact_youth) {
-    // YOUTH
-    $registered_persons['youth'] += 1;
+  $main_contact_attending = ica_event_get_form_value(ICA_REGISTRANT_ATTENDING, $form, $form_state);
+  if ($main_contact_attending) {
+    $main_contact_youth = ica_event_get_form_value(ICA_EVENT_YOUTH, $form, $form_state);
+    if ($main_contact_youth) {
+      // YOUTH
+      $registered_persons['youth'] += 1;
 
-  } elseif ($organisation_id) {
-    // MEMBER...
-    if ($local_organisation) {
-      // LOCAL MEMBER
-      $registered_persons['member_local'] += 1;
+    } elseif ($organisation_id) {
+      // MEMBER...
+      if ($local_organisation) {
+        // LOCAL MEMBER
+        $registered_persons['member_local'] += 1;
+      } else {
+        // INTERNATIONAL MEMBER
+        $registered_persons['member_int'] += 1;
+      }
     } else {
-      // INTERNATIONAL MEMBER
-      $registered_persons['member_int'] += 1;
+      // PARTICIPANT
+      $registered_persons['participant'] += 1;
     }
-  } else {
-    // PARTICIPANT
-    $registered_persons['participant'] += 1;
-  }
 
-  // add the spouse
-  $main_contact_has_spouse = ica_event_get_form_value(ICA_EVENT_FEE_SPOUSE, $form, $form_state);
-  if ($main_contact_has_spouse) {
-    $registered_persons['spouse'] += 1;
+    // add the spouse
+    $main_contact_has_spouse = ica_event_get_form_value(ICA_EVENT_FEE_SPOUSE, $form, $form_state);
+    if ($main_contact_has_spouse) {
+      $registered_persons['spouse'] += 1;
+    }
   }
 
   // THEN: process all people in the matrix;
