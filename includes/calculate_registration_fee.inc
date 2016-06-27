@@ -39,7 +39,7 @@ function ica_event_calculate_registration_fee(&$form, $form_state) {
   $main_contact_attending = ica_event_get_form_value(ICA_REGISTRANT_ATTENDING, $form, $form_state);
   if ($main_contact_attending) {
     $main_contact_youth = ica_event_get_form_value(ICA_EVENT_YOUTH, $form, $form_state);
-    if ($main_contact_youth) {
+    if (ica_event_is_youth($main_contact_youth)) {
       // YOUTH
       $registered_persons['youth'] += 1;
 
@@ -115,4 +115,15 @@ function ica_event_get_form_value($variable, &$form, &$form_state) {
 function ica_event_is_local_member_org($organisation_id) {
   // TODO: implement
   return FALSE;
+}
+
+function ica_event_is_youth($date_attributes) {
+  if (   empty($date_attributes['year']) 
+      || empty($date_attributes['month']) 
+      || empty($date_attributes['day'])) {
+    return FALSE;
+  } else {
+    $birthday = sprintf("%04d-%02d-%02d", $date_attributes['year'], $date_attributes['month'], $date_attributes['day']);
+    return $birthday >= ICA_EVENT_YOUTH_MAX_BIRTHDAY;
+  }
 }
