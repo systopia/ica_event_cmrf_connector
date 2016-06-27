@@ -7,13 +7,6 @@
 include_once('webform_integration.inc');
 
 
-define('ICA_EVENT_FEE_PARTICIPANT',   950.00);
-define('ICA_EVENT_FEE_MEMBER_INT',    750.00);
-define('ICA_EVENT_FEE_MEMBER_LOCAL',  250.00);
-define('ICA_EVENT_FEE_YOUTH',         200.00);
-define('ICA_EVENT_FEE_SPOUSE',        100.00);
-
-
 /**
  * This is the algorithm to calculate the registration fee for
  * a given set of registration data
@@ -26,7 +19,7 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
   $registered_persons = array(
     'participant'  => 0,
     'member_int'   => 0,
-    'member_local' => 0,
+    'local'        => 0,
     'youth'        => 0,
     'spouse'       => 0
     );
@@ -34,25 +27,25 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
   // get some basic information
   $current_values     = ica_event_get_form_values($form, $form_state);
   $organisation_id    = ica_event_get_form_value(ICA_MEMBER_ORGANISATION, $current_values);
-  $local_organisation = ica_event_is_local_member_org($organisation_id);
+  $registrant_country = ica_event_get_form_value(ICA_REGISTRANT_COUNTRY, $current_values);
 
   // first, process the main contact
   $main_contact_attending = ica_event_get_form_value(ICA_REGISTRANT_ATTENDING, $current_values);
   if ($main_contact_attending) {
+
     $main_contact_youth = ica_event_get_form_value(ICA_EVENT_YOUTH, $current_values);
     if (ica_event_is_youth($main_contact_youth)) {
-      // YOUTH
+      // YOUNG PARTICIPANT
       $registered_persons['youth'] += 1;
 
+    } elseif ($registrant_country == ICA_MEMBER_COUNTRY_LOCAL) {
+      // LOCAL PARTICIPANT
+      $registered_persons['local'] += 1;
+
     } elseif ($organisation_id) {
-      // MEMBER...
-      if ($local_organisation) {
-        // LOCAL MEMBER
-        $registered_persons['member_local'] += 1;
-      } else {
-        // INTERNATIONAL MEMBER
-        $registered_persons['member_int'] += 1;
-      }
+      // INTERNATIONAL MEMBER
+      $registered_persons['member_int'] += 1;
+
     } else {
       // PARTICIPANT
       $registered_persons['participant'] += 1;
@@ -70,17 +63,17 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
   if ($matrix) {
     foreach ($matrix as $row_nr => $values) {
       if (!empty($values[ICA_EVENT_MATRIX_YOUTH_IDX])) {
-        // YOUTH
+        // YOUNG PARTICIPANT
         $registered_persons['youth'] += 1;
+
+      } elseif ($registrant_country == ICA_MEMBER_COUNTRY_LOCAL) {
+        // LOCAL PARTICIPANT
+        $registered_persons['local'] += 1;
+
       } elseif ($organisation_id) {
-        // MEMBER...
-        if ($local_organisation) {
-          // LOCAL MEMBER
-          $registered_persons['member_local'] += 1;
-        } else {
-          // INTERNATIONAL MEMBER
-          $registered_persons['member_int'] += 1;
-        }
+        // INTERNATIONAL MEMBER
+        $registered_persons['member_int'] += 1;
+
       } else {
         // PARTICIPANT
         $registered_persons['participant'] += 1;
@@ -95,10 +88,11 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
   $registered_persons['amount'] =
       $registered_persons['participant']  * ICA_EVENT_FEE_PARTICIPANT
     + $registered_persons['member_int']   * ICA_EVENT_FEE_MEMBER_INT
-    + $registered_persons['member_local'] * ICA_EVENT_FEE_MEMBER_LOCAL
+    + $registered_persons['local']        * ICA_EVENT_FEE_LOCAL
     + $registered_persons['youth']        * ICA_EVENT_FEE_YOUTH
     + $registered_persons['spouse']       * ICA_EVENT_FEE_SPOUSE;
 
+  // error_log(json_encode($registered_persons));
   return $registered_persons;
 }
 
