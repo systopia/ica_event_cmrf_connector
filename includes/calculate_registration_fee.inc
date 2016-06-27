@@ -38,7 +38,7 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
       // YOUNG PARTICIPANT
       $registered_persons['youth'] += 1;
 
-    } elseif ($registrant_country == ICA_MEMBER_COUNTRY_LOCAL) {
+    } elseif ($registrant_country == ICA_REGISTRANT_COUNTRY_LOCAL) {
       // LOCAL PARTICIPANT
       $registered_persons['local'] += 1;
 
@@ -66,7 +66,7 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
         // YOUNG PARTICIPANT
         $registered_persons['youth'] += 1;
 
-      } elseif ($registrant_country == ICA_MEMBER_COUNTRY_LOCAL) {
+      } elseif ($registrant_country == ICA_REGISTRANT_COUNTRY_LOCAL) {
         // LOCAL PARTICIPANT
         $registered_persons['local'] += 1;
 
