@@ -20,3 +20,41 @@ define('ICA_EVENT_MATRIX_YOUTH_IDX',   25);
 
 
 define('ICA_EVENT_YOUTH_MAX_BIRTHDAY', '1987-09-30');
+
+
+/**
+ * get all known values of a multipage webform
+ */
+function ica_event_get_form_values(&$form, &$form_state) {
+  $values = array();
+
+  // first, extract values from $form_state
+  $components = $form_state['storage']['component_tree']['children'];
+  $form_state_values = array('values/submitted', 'input/submitted', 'storage/submitted');
+
+  foreach ($form_state_values as $value_path) {
+    $path_elements = explode('/', $value_path);
+    $element = $form_state;
+    foreach ($path_elements as $path) {
+      if (isset($element[$path])) {
+        $element = $element[$path];
+      } else {
+        continue 2;        
+      }
+    }
+
+    // $element should have all values now
+    foreach ($element as $key => $value) {
+      if (isset($components[$key])) {
+        $key = $components[$key]['form_key'];
+      } else {
+        continue;
+      }
+      $values[$key] = $value;
+    }
+  }
+
+  // TODO: add $form['submitted']??
+
+  return $values;
+}
