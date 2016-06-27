@@ -29,7 +29,8 @@ function ica_event_get_form_values(&$form, &$form_state) {
   $values = array();
 
   // first, extract values from $form_state
-  $components = $form_state['storage']['component_tree']['children'];
+  $webform = $form['#node']->webform;
+  $components = $webform['components'];
   $form_state_values = array('values/submitted', 'input/submitted', 'storage/submitted');
 
   foreach ($form_state_values as $value_path) {
@@ -55,6 +56,6 @@ function ica_event_get_form_values(&$form, &$form_state) {
   }
 
   // TODO: add $form['submitted']??
-
+  // error_log(json_encode($values));
   return $values;
 }
