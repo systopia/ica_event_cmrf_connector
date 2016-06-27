@@ -16,7 +16,7 @@ define('ICA_MEMBER_ORGANISATION',      'member_organisation');
 
 define('ICA_EVENT_MATRIX',             'group_registration_table');
 define('ICA_EVENT_MATRIX_SPOUSE_IDX',  8);
-define('ICA_EVENT_MATRIX_YOUTH_IDX',   25);
+define('ICA_EVENT_MATRIX_YOUTH_IDX',   11);
 
 
 define('ICA_EVENT_YOUTH_MAX_BIRTHDAY', '1987-09-30');
