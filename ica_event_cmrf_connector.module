@@ -36,8 +36,19 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
     // calculate amount
     if (isset($form['submitted'][ICA_EVENT_AMOUNT])) {
       include_once('includes/calculate_registration_fee.inc');
-      $fee = ica_event_calculate_registration_fee($form, $form_state);
-      $form['submitted'][ICA_EVENT_AMOUNT]['#value'] = $fee['amount'];
+      $registration = ica_event_calculate_registration_fee($form, $form_state);
+      $form['submitted'][ICA_EVENT_AMOUNT]['#value'] = $registration['amount'];
+
+      // set the fields
+      foreach ($registration['fees'] as $key => $fee) {
+        if (isset($form['submitted']["registration_{$key}_count"])) {
+          $form['submitted']["registration_{$key}_count"]['#value'] = $registration[$key];
+        }
+
+        if (isset($form['submitted']["registration_{$key}_subtotal"])) {
+          $form['submitted']["registration_{$key}_subtotal"]['#value'] = $registration[$key] * $registration['fees'][$key];
+        }
+      }
     }
 
     // insert lookup logic for discount code

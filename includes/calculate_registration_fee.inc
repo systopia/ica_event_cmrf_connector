@@ -85,6 +85,14 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
     }
   }
 
+  $registered_persons['fees'] = array(
+    'participant' => ICA_EVENT_FEE_PARTICIPANT,
+    'member_int'  => ICA_EVENT_FEE_MEMBER_INT,
+    'local'       => ICA_EVENT_FEE_LOCAL,
+    'youth'       => ICA_EVENT_FEE_YOUTH,
+    'spouse'      => ICA_EVENT_FEE_SPOUSE,
+    );
+
   $registered_persons['amount'] =
       $registered_persons['participant']  * ICA_EVENT_FEE_PARTICIPANT
     + $registered_persons['member_int']   * ICA_EVENT_FEE_MEMBER_INT
