@@ -59,8 +59,13 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
   }
 
   // THEN: process all people in the matrix;
-  $matrix = ica_event_get_form_value(ICA_EVENT_MATRIX, $current_values);
-  if ($matrix) {
+  $matrix_serialised = ica_event_get_form_value(ICA_EVENT_MATRIX, $current_values);
+  if ($matrix_serialised) {
+    $matrix = array();
+    foreach ($matrix_serialised as $matrix_block) {
+      $matrix += unserialize($matrix_block);
+    }
+
     foreach ($matrix as $row_nr => $values) {
       if (!empty($values[ICA_EVENT_MATRIX_YOUTH_IDX])) {
         // YOUNG PARTICIPANT
