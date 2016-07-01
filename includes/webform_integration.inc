@@ -34,6 +34,12 @@ define('ICA_EVENT_MATRIX_SPOUSE_IDX',  8);
 define('ICA_EVENT_MATRIX_YOUTH_IDX',   11);
 
 
+// submission data
+define('ICA_REGISTRANT_EMAIL',         'registrant_email');
+define('ICA_REGISTRANT_FIRST_NAME',    'registrant_first_name');
+define('ICA_REGISTRANT_LAST_NAME',     'registrant_last_name');
+
+
 
 /**
  * get all known values of a multipage webform

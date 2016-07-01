@@ -33,6 +33,11 @@ function ica_event_cmrf_connector_sendCall($entity, $action, $parameters, $optio
  */
 function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
   if (in_array($form_id, explode(',', ICA_EVENT_FORM_IDS))) {
+    // add submission handler, see below
+    if (!in_array('ica_event_submission', $form['#submit'])) {
+      $form['#submit'][] = 'ica_event_webform_submission';
+    }
+
     // calculate amount
     if (isset($form['submitted'][ICA_EVENT_AMOUNT])) {
       include_once('includes/calculate_registration_fee.inc');
@@ -63,6 +68,14 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
       );
     }
   }
+}
+
+/**
+ * call submission handler
+ */
+function ica_event_webform_submission($form_values) {
+  include_once('includes/submission.inc');
+  ica_event_submission($form_values);
 }
 
 
