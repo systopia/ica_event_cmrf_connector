@@ -61,6 +61,11 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
   // THEN: process all people in the matrix;
   $matrix_serialised = ica_event_get_form_value(ICA_EVENT_MATRIX, $current_values);
   if ($matrix_serialised) {
+    // sometimes it's an array - sometimes not :/
+    if (!is_array($matrix_serialised)) {
+      $matrix_serialised = array(0 => $matrix_serialised);
+    }
+    
     $matrix = array();
     foreach ($matrix_serialised as $matrix_block) {
       $matrix += unserialize($matrix_block);
