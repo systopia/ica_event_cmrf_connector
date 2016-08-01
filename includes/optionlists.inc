@@ -38,6 +38,7 @@ function ica_member_organisations() {
                           ),
                           array(
                             'limit'  => 2000,
+                            'sort'   => 'display_name',
                             'cache'  => '12 hours',
                           ));
 
