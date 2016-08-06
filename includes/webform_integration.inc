@@ -5,9 +5,10 @@
  */
 
 // constants: general
-define('ICA_EVENT_FORM_IDS',           'webform_client_form_1,webform_client_form_3');
+define('ICA_EVENT_FORM_IDS',           'webform_client_form_1,webform_client_form_3,webform_client_form_5');
 define('ICA_EVENT_YOUTH_MAX_BIRTHDAY', '1987-09-30');
 define('ICA_REGISTRANT_COUNTRY_LOCAL', 'MY');
+
 
 // constants: registration fees
 define('ICA_EVENT_FEE_YOUTH',          200.00);
@@ -15,6 +16,7 @@ define('ICA_EVENT_FEE_LOCAL',          250.00);
 define('ICA_EVENT_FEE_MEMBER_INT',     750.00);
 define('ICA_EVENT_FEE_PARTICIPANT',    950.00);
 define('ICA_EVENT_FEE_SPOUSE',         100.00);
+
 
 
 // active fields
@@ -33,14 +35,20 @@ define('ICA_EVENT_MATRIX',             'group_registration_table');
 define('ICA_EVENT_MATRIX_SPOUSE_IDX',  8);
 define('ICA_EVENT_MATRIX_YOUTH_IDX',   11);
 
-
 // submission data
-define('ICA_REGISTRANT_EMAIL',         'registrant_email');
-define('ICA_REGISTRANT_FIRST_NAME',    'registrant_first_name');
-define('ICA_REGISTRANT_LAST_NAME',     'registrant_last_name');
+define('ICA_REGISTRANT_PREFIX',        'registrant_');
+define('ICA_SPOUSE_PREFIX',            'spouse_');
 
 
-
+/** 
+ * list the different registration classes
+ */
+function ica_event_get_registration_classes() {
+  return array(
+    'participant' => array(   'amount'  => 
+      ))
+}
+8:31-9:00
 /**
  * get all known values of a multipage webform
  */

@@ -16,13 +16,26 @@ include_once('webform_integration.inc');
  *                'explanations' => array (reasons)
  */
 function ica_event_calculate_registration_fee(&$form, &$form_state) {
+  // list the registration classes
+  $classes = array(
+    'participant' => array( 'amount' => 
+
+      ))
+
+  // start compiling the overview
   $registered_persons = array(
     'participant'  => 0,
     'member_int'   => 0,
     'local'        => 0,
     'youth'        => 0,
-    'spouse'       => 0
+    'spouse'       => 0,
     );
+
+  // add a mapping of person reference to info
+  //  ()
+  $registered_persons['mapping'] = array();
+      '_mapping'     => array(),
+
 
   // get some basic information
   $current_values     = ica_event_get_form_values($form, $form_state);
@@ -36,6 +49,7 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
     $main_contact_youth = ica_event_get_form_value(ICA_EVENT_YOUTH, $current_values);
     if (ica_event_is_youth($main_contact_youth)) {
       // YOUNG PARTICIPANT
+      $registered_persons['youth'] += 1;
       $registered_persons['youth'] += 1;
 
     } elseif ($registrant_country == ICA_REGISTRANT_COUNTRY_LOCAL) {
