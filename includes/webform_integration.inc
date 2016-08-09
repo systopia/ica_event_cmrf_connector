@@ -15,7 +15,7 @@ define('ICA_EVENT_FEE_YOUTH',          200.00);
 define('ICA_EVENT_FEE_LOCAL',          250.00);
 define('ICA_EVENT_FEE_MEMBER_INT',     750.00);
 define('ICA_EVENT_FEE_PARTICIPANT',    950.00);
-define('ICA_EVENT_FEE_SPOUSE',         100.00);
+define('ICA_EVENT_FEE_PARTNER',        100.00);
 
 
 
@@ -24,31 +24,53 @@ define('ICA_EVENT_AMOUNT',             'amount');
 define('ICA_EVENT_DISCOUNTCODE',       'discount_code');
 
 // relevant fields for price calculation
-define('ICA_EVENT_SPOUSE',             'spouse');
+define('ICA_EVENT_PARTNER',            'partner');
 define('ICA_REGISTRANT_ATTENDING',     'registrant_attending');
 define('ICA_REGISTRANT_COUNTRY',       'country');
 define('ICA_EVENT_YOUTH',              'youth');
 define('ICA_MEMBER_ORGANISATION',      'member_organisation');
 
-// matrix fields
+// matrix
 define('ICA_EVENT_MATRIX',             'group_registration_table');
-define('ICA_EVENT_MATRIX_SPOUSE_IDX',  8);
-define('ICA_EVENT_MATRIX_YOUTH_IDX',   11);
 
 // submission data
 define('ICA_REGISTRANT_PREFIX',        'registrant_');
-define('ICA_SPOUSE_PREFIX',            'spouse_');
+define('ICA_PARTNER_PREFIX',           'partner_');
+
+// DEFINE matrix fields
+$ica_event_matrix_fields = array(
+    1  => '',
+    2  => '',
+    3  => '',
+    4  => '',
+    5  => '',
+    6  => '',
+    7  => '',
+    8  => 'partner',
+    9  => '',
+    10 => '',
+    11 => 'youth',
+  );
 
 
-/** 
- * list the different registration classes
+/**
+ * translate a the matrix's indices to field_names using $ica_event_matrix_fields constant
  */
-function ica_event_get_registration_classes() {
-  return array(
-    'participant' => array(   'amount'  => 
-      ))
+function ica_event_get_matrix_values($raw_matrix_data) {
+  global $ica_event_matrix_fields;
+  $matrix_values = array();
+  foreach ($raw_matrix_data as $key => $values) {
+    $matrix_values[$key] = array();
+    foreach ($values as $element_index => $value) {
+      $field_name = $ica_event_matrix_fields[$element_index];
+      $matrix_values[$key][$field_name] = $value;
+    }
+  }
+
+  return $matrix_values;
 }
-8:31-9:00
+
+
 /**
  * get all known values of a multipage webform
  */
@@ -86,3 +108,4 @@ function ica_event_get_form_values(&$form, &$form_state) {
   // error_log(json_encode($values));
   return $values;
 }
+

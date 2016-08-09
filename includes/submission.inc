@@ -32,7 +32,7 @@ function ica_event_submission($form_values) {
   $main_participant['participant_fee_currency']
   $main_participant['participant_fee_level']
   $submission['participant'] = 
-  if (!empty($form_values[ICA_EVENT_SPOUSE])) {
+  if (!empty($form_values[ICA_EVENT_PARTNER])) {
     $partner = ica_event_submission_extract_participant($form_values, ICA_PARTNER_PREFIX);
     $partner['participant_status']
     $partner['participant_role']
