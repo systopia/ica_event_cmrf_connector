@@ -5,7 +5,7 @@
  */
 
 include_once('webform_integration.inc');
-include_once('calculate_registration.inc');
+include_once('calculate_registrations.inc');
 
 /**
  * This is the algorithm to calculate the registration fee for

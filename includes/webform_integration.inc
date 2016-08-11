@@ -62,8 +62,8 @@ function ica_event_get_matrix_values($raw_matrix_data, $matrix_fields) {
   // first: prepare matrix data:
   if (!$raw_matrix_data) return array();
 
-  if (!is_array($matrix_serialised)) {
-    $raw_matrix_data = array(0 => $matrix_serialised);
+  if (!is_array($raw_matrix_data)) {
+    $raw_matrix_data = array(0 => $raw_matrix_data);
   }
 
   $matrix_data = array();
