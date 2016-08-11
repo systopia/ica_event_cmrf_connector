@@ -28,6 +28,7 @@ define('ICA_EVENT_DISCOUNTCODE',       'discount_code');
 define('ICA_EVENT_PARTNER',            'partner');
 define('ICA_REGISTRANT_ATTENDING',     'registrant_attending');
 define('ICA_REGISTRANT_COUNTRY',       'country');
+define('ICA_EVENT_BIRTH_DATE',         'birth_date');
 define('ICA_EVENT_YOUTH',              'youth');
 define('ICA_MEMBER_ORGANISATION',      'member_organisation');
 
@@ -50,8 +51,8 @@ $ica_event_matrix_fields_group_registration = array(
     7  => 'registrant_languages',
     8  => 'partner',
     9  => 'partner_badge',
-    10 => 'comments',
-    11 => 'youth',
+    10 => 'registrant_comments',
+    11 => 'birth_date',
     12 => 'registrant_organization_name',
     13 => 'registrant_position',
   );
@@ -65,6 +66,7 @@ $ica_event_registration_properties = array(
         'languages'  => 'custom_languages',
         'badge'      => 'custom_badge',
         'comments'   => 'custom_comments',
+        'youth'      => 'birth_date',
         'email'      => 'email');
 
 /**

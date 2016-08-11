@@ -62,7 +62,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
   if ($main_contact_attending) {
 
-    $main_contact_youth = ica_event_get_value(ICA_EVENT_YOUTH, $current_values);
+    $main_contact_youth = ica_event_get_value(ICA_EVENT_BIRTH_DATE, $current_values);
     if (ica_event_is_youth($main_contact_youth)) {
       // YOUNG PARTICIPANT
       $class = 'youth';
