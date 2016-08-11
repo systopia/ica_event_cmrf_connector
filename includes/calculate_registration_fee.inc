@@ -36,7 +36,7 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
     );
 
   // count and calculate the registrations
-  foreach ($registration as $registration) {
+  foreach ($registrations as $registration) {
     $registration_info[$registration['_class']] += 1;
   }
 

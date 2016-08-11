@@ -162,6 +162,9 @@ function ica_event_is_local_member_org($organisation_id) {
   return FALSE;
 }
 
+/**
+ * check whether the given birth date will grant 'youth' status
+ */
 function ica_event_is_youth($date) {
   if (is_array($date)) {
     if (empty($date['year']) || empty($date['month']) || empty($date['day'])) {

@@ -38,6 +38,7 @@ define('ICA_REGISTRANT_PREFIX',        'registrant_');
 define('ICA_PARTNER_PREFIX',           'partner_');
 
 // DEFINE matrix fields
+global $ica_event_matrix_fields_group_registration;
 $ica_event_matrix_fields_group_registration = array(
     1  => 'registrant_title',
     2  => 'registrant_prefix',
@@ -67,7 +68,7 @@ function ica_event_get_matrix_values($raw_matrix_data, $matrix_fields) {
   }
 
   $matrix_data = array();
-  foreach ($raw_matrix_data_data as $matrix_block) {
+  foreach ($raw_matrix_data as $matrix_block) {
     $matrix_data += unserialize($matrix_block);
   }
 
