@@ -12,10 +12,8 @@ include_once('calculate_registrations.inc');
  * AJAX call handler for 'discount code field changed'
  */
 function ica_event_submission($form_values) {
-  // error_log(print_r($form_values,1));
-
   // TODO: calculate the registration fee
-  $registration_fees = ica_event_calculate_registrations($form, $form_state);
+  $registrations = ica_event_calculate_registrations($form, $form_state);
 
   // compile registration data from the form_values
   $submission = array();

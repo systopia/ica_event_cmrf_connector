@@ -8,6 +8,7 @@
 define('ICA_EVENT_FORM_IDS',           'webform_client_form_1,webform_client_form_3,webform_client_form_5');
 define('ICA_EVENT_YOUTH_MAX_BIRTHDAY', '1987-09-30');
 define('ICA_REGISTRANT_COUNTRY_LOCAL', 'MY');
+define('ICA_DEFAULT_CURRENCY',         'EUR');
 
 
 // constants: registration fees
@@ -55,6 +56,13 @@ $ica_event_matrix_fields_group_registration = array(
     13 => 'registrant_position',
   );
 
+global $ica_event_registration_properties;
+$ica_event_registration_properties = array(
+        'first_name' => 'first_name', 
+        'last_name'  => 'last_name',
+        'prefix'     => 'prefix_id', 
+        'badge'      => 'custom_badge',
+        'email'      => 'email');
 
 /**
  * translate a the matrix's indices to field_names using $ica_event_matrix_fields constant
