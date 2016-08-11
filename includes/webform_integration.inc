@@ -49,7 +49,7 @@ $ica_event_matrix_fields_group_registration = array(
     6  => 'registrant_email',
     7  => 'registrant_languages',
     8  => 'partner',
-    9  => 'partner_badge_name',
+    9  => 'partner_badge',
     10 => 'comments',
     11 => 'youth',
     12 => 'registrant_organization_name',
@@ -61,7 +61,10 @@ $ica_event_registration_properties = array(
         'first_name' => 'first_name', 
         'last_name'  => 'last_name',
         'prefix'     => 'prefix_id', 
+        'position'   => 'custom_position',
+        'languages'  => 'custom_languages',
         'badge'      => 'custom_badge',
+        'comments'   => 'custom_comments',
         'email'      => 'email');
 
 /**
@@ -124,7 +127,12 @@ function ica_event_get_form_values(&$form, &$form_state) {
       } else {
         continue;
       }
-      $values[$key] = $value;
+
+      if (is_array($value) && count($value) == 1) {
+        $values[$key] = reset($value);
+      } else {
+        $values[$key] = $value;
+      }
     }
   }
 
