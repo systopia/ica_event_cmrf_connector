@@ -147,9 +147,9 @@ function ica_event_copy_fields(&$registration, &$values, $fields, $prefix = '') 
   foreach ($fields as $data_key => $registration_key) {
     $data_key = $prefix . $data_key;
     if (isset($values[$data_key])) {
-      $values[$registration_key] = $values[$data_key];
+      $registration[$registration_key] = $values[$data_key];
     } else {
-      $values[$registration_key] = '';
+      $registration[$registration_key] = '';
     }
   }
 }
