@@ -4,7 +4,7 @@
  * Defines how a registration is submitted to CiviCRM
  */
 
-include_once('webform_integration.inc');
+include_once('calculate_registrations.inc');
 
 
 
@@ -12,10 +12,10 @@ include_once('webform_integration.inc');
  * AJAX call handler for 'discount code field changed'
  */
 function ica_event_submission($form_values) {
-  error_log(print_r($form_values,1));
+  // error_log(print_r($form_values,1));
 
   // TODO: calculate the registration fee
-  $registration_fees = ica_event_calculate_registration_fee($form, $form_state);
+  $registration_fees = ica_event_calculate_registrations($form, $form_state);
 
   // compile registration data from the form_values
   $submission = array();
@@ -26,24 +26,25 @@ function ica_event_submission($form_values) {
 
   // process main participant (+partner)
   $main_participant = ica_event_submission_extract_participant($form_values, ICA_REGISTRANT_PREFIX);
-  $main_participant['participant_status']
-  $main_participant['participant_role']
-  $main_participant['participant_fee_amount']
-  $main_participant['participant_fee_currency']
-  $main_participant['participant_fee_level']
-  $submission['participant'] = 
+  $main_participant['participant_status'];
+  $main_participant['participant_role'];
+  $main_participant['participant_fee_amount'];
+  $main_participant['participant_fee_currency'];
+  $main_participant['participant_fee_level'];
+  // $submission['participant'] = 
+
   if (!empty($form_values[ICA_EVENT_PARTNER])) {
     $partner = ica_event_submission_extract_participant($form_values, ICA_PARTNER_PREFIX);
-    $partner['participant_status']
-    $partner['participant_role']
-    $partner['participant_fee_amount']
-    $partner['participant_fee_currency']
-    $partner['participant_fee_level']
+    $partner['participant_status'];
+    $partner['participant_role'];
+    $partner['participant_fee_amount'];
+    $partner['participant_fee_currency'];
+    $partner['participant_fee_level'];
     $submission['additional_participants'][] = $partner;
   }
 
   // process additional participants (+partner)
-  if 
+  // if 
 
 
 

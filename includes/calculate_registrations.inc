@@ -47,13 +47,13 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   // get some values
   $registrations      = array();
   $current_values     = ica_event_get_form_values($form, $form_state);
-  $organisation_id    = ica_event_get_form_value(ICA_MEMBER_ORGANISATION, $current_values);
-  $registrant_country = ica_event_get_form_value(ICA_REGISTRANT_COUNTRY, $current_values);
-
-  $main_contact_attending = ica_event_get_form_value(ICA_REGISTRANT_ATTENDING, $current_values);
+  $organisation_id    = ica_event_get_value(ICA_MEMBER_ORGANISATION, $current_values);
+  $registrant_country = ica_event_get_value(ICA_REGISTRANT_COUNTRY, $current_values);
+  
+  $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
   if ($main_contact_attending) {
 
-    $main_contact_youth = ica_event_get_form_value(ICA_EVENT_YOUTH, $current_values);
+    $main_contact_youth = ica_event_get_value(ICA_EVENT_YOUTH, $current_values);
     if (ica_event_is_youth($main_contact_youth)) {
       // YOUNG PARTICIPANT
       $class = 'youth';
@@ -77,7 +77,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
     $registrations['main'] = $main_registration;
 
     // add the partner
-    $main_contact_has_partner = ica_event_get_form_value(ICA_EVENT_FEE_PARTNER, $current_values);
+    $main_contact_has_partner = ica_event_get_value(ICA_EVENT_FEE_PARTNER, $current_values);
     if ($main_contact_has_partner) {
       $partner_registration = $classes['partner'];
       $partner_registration['partner_of'] = 'main';
@@ -87,22 +87,14 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   }
 
   // THEN: process all people in the matrix;
-  $matrix_serialised = ica_event_get_form_value(ICA_EVENT_MATRIX, $current_values);
-  if ($matrix_serialised) {
-    // sometimes it's an array - sometimes not :/
-    if (!is_array($matrix_serialised)) {
-      $matrix_serialised = array(0 => $matrix_serialised);
-    }
-    
-    $matrix = array();
-    foreach ($matrix_serialised as $matrix_block) {
-      $matrix += unserialize($matrix_block);
-    }
-
-
-    foreach ($matrix as $row_nr => $values) {
+  global $ica_event_matrix_fields_group_registration;
+  $matrix_serialised = ica_event_get_value(ICA_EVENT_MATRIX, $current_values);
+  $matrix_data = ica_event_get_matrix_values($matrix_serialised, $ica_event_matrix_fields_group_registration);
+  
+  if ($matrix_data) {
+    foreach ($matrix_data as $row_nr => $values) {
       $registrant_key = "additional_{$row_nr}";
-      if (!empty($values[ICA_EVENT_MATRIX_YOUTH_IDX])) {
+      if (!empty($values[ICA_EVENT_YOUTH])) {
         // YOUNG PARTICIPANT
         $class = 'youth';
 
@@ -120,59 +112,27 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
       }
 
       $registration = $classes[$class];
-      // TODO: get values
-      // ica_event_extract_matrix_fields($registration, $current_values, $fields, ICA_REGISTRANT_PREFIX);
+      ica_event_copy_fields($registration, $values, $fields, ICA_REGISTRANT_PREFIX);
       $registrations[$registrant_key] = $registration;
 
-      if (!empty($values[ICA_EVENT_MATRIX_partner_IDX])) {
-        $registration_info['partner'] += 1;
+      if (!empty($values[ICA_EVENT_PARTNER])) {
+        $partner_key = "additional_{$row_nr}_partner";
+        $partner_registration = $classes['partner'];
+        $partner_registration['partner_of'] = $registrant_key;
+        ica_event_copy_fields($partner_registration, $values, $fields, ICA_PARTNER_PREFIX);
+        $registrations[$partner_key] = $partner_registration;
       }
     }
   }
 
+  // error_log(json_encode($registrations));
   return $registrations;
 }
 
 
 /**
- * derive one or two registrations from the value blob
+ * copy a set of fields into the registration data (first argument)
  */
-function ica_event_get_registrations($values, $id_key) {
-  $main_contact_youth = isset($values[ICA_EVENT_YOUTH])?$values[ICA_EVENT_YOUTH]:NULL;
-  if (ica_event_is_youth($main_contact_youth)) {
-    // YOUNG PARTICIPANT
-    $class = 'youth';
-
-  } elseif ($registrant_country == ICA_REGISTRANT_COUNTRY_LOCAL) {
-    // LOCAL PARTICIPANT
-    $class = 'local';
-
-  } elseif ($organisation_id) {
-    // INTERNATIONAL MEMBER
-    $class = 'member_int';
-
-  } else {
-    // PARTICIPANT
-    $class = 'participant';
-  }
-
-  // use the derived class information as a template for the registration
-  $main_registration = $classes[$class]; 
-  ica_event_copy_fields($main_registration, $current_values, $fields, ICA_REGISTRANT_PREFIX);
-  $registrations['main'] = $main_registration;
-
-  // add the partner
-  $main_contact_has_partner = ica_event_get_form_value(ICA_EVENT_FEE_PARTNER, $current_values);
-  if ($main_contact_has_partner) {
-    $partner_registration = $classes['partner'];
-    $partner_registration['partner_of'] = 'main';
-    ica_event_copy_fields($partner_registration, $current_values, $fields, ICA_PARTNER_PREFIX);
-    $registrations['main_partner'] = $partner_registration;
-  }
-
-
-}
-
 function ica_event_copy_fields(&$registration, &$values, $fields, $prefix = '') {
   foreach ($fields as $data_key => $registration_key) {
     $data_key = $prefix . $data_key;
@@ -185,8 +145,10 @@ function ica_event_copy_fields(&$registration, &$values, $fields, $prefix = '') 
 }
 
 
-
-function ica_event_get_form_value($key, &$variables) {
+/**
+ * safe way to get a value from the variables
+ */
+function ica_event_get_value($key, &$variables) {
   if (isset($variables[$key])) {
     return $variables[$key];
   } else {

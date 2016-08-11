@@ -38,31 +38,46 @@ define('ICA_REGISTRANT_PREFIX',        'registrant_');
 define('ICA_PARTNER_PREFIX',           'partner_');
 
 // DEFINE matrix fields
-$ica_event_matrix_fields = array(
-    1  => '',
-    2  => '',
-    3  => '',
-    4  => '',
-    5  => '',
-    6  => '',
-    7  => '',
+$ica_event_matrix_fields_group_registration = array(
+    1  => 'registrant_title',
+    2  => 'registrant_prefix',
+    3  => 'registrant_last_name',
+    4  => 'registrant_first_name',
+    5  => 'registrant_badge_name',
+    6  => 'registrant_email',
+    7  => 'registrant_languages',
     8  => 'partner',
-    9  => '',
-    10 => '',
+    9  => 'partner_badge_name',
+    10 => 'comments',
     11 => 'youth',
+    12 => 'registrant_organization_name',
+    13 => 'registrant_position',
   );
 
 
 /**
  * translate a the matrix's indices to field_names using $ica_event_matrix_fields constant
  */
-function ica_event_get_matrix_values($raw_matrix_data) {
-  global $ica_event_matrix_fields;
+function ica_event_get_matrix_values($raw_matrix_data, $matrix_fields) {
+  // first: prepare matrix data:
+  if (!$raw_matrix_data) return array();
+
+  if (!is_array($matrix_serialised)) {
+    $raw_matrix_data = array(0 => $matrix_serialised);
+  }
+
+  $matrix_data = array();
+  foreach ($raw_matrix_data_data as $matrix_block) {
+    $matrix_data += unserialize($matrix_block);
+  }
+
+
+  // then: relsove the fields
   $matrix_values = array();
-  foreach ($raw_matrix_data as $key => $values) {
+  foreach ($matrix_data as $key => $values) {
     $matrix_values[$key] = array();
     foreach ($values as $element_index => $value) {
-      $field_name = $ica_event_matrix_fields[$element_index];
+      $field_name = $matrix_fields[$element_index];
       $matrix_values[$key][$field_name] = $value;
     }
   }
@@ -89,7 +104,7 @@ function ica_event_get_form_values(&$form, &$form_state) {
       if (isset($element[$path])) {
         $element = $element[$path];
       } else {
-        continue 2;        
+        continue 2;
       }
     }
 
