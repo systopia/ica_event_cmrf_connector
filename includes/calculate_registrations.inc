@@ -51,6 +51,9 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
                             'participant_status'       => 'Registered',
                             'participant_role'         => 'Partner',
                             'participant_fee_level'    => 'Partner'),
+    'organisation'=> array( '_class'                   => 'organisation',
+                            'contact_type'             => 'Organization',
+                            ),
     );
   
   // get some values
@@ -59,6 +62,13 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   $organisation_id    = ica_event_get_value(ICA_MEMBER_ORGANISATION, $current_values);
   $registrant_country = ica_event_get_value(ICA_REGISTRANT_COUNTRY, $current_values);
   
+  // FIRST: create organisation
+  global $ica_event_registration_properties;
+  $organisation = $classes['organisation'];
+  ica_event_copy_fields($organisation, $current_values, $ica_event_registration_properties, ICA_ORGANISATION_PREFIX);
+  $registrations['organisation'] = $organisation;
+
+  // THEN: create main contact
   $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
   if ($main_contact_attending) {
 
@@ -81,7 +91,6 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
     }
 
     // use the derived class information as a template for the registration
-    global $ica_event_registration_properties;
     $main_registration = $classes[$class]; 
     ica_event_copy_fields($main_registration, $current_values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
     $registrations['main'] = $main_registration;
@@ -135,7 +144,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
     }
   }
 
-  // error_log(json_encode($registrations));
+  error_log(json_encode($registrations));
   return $registrations;
 }
 

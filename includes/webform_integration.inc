@@ -9,6 +9,7 @@ define('ICA_EVENT_FORM_IDS',           'webform_client_form_1,webform_client_for
 define('ICA_EVENT_YOUTH_MAX_BIRTHDAY', '1987-09-30');
 define('ICA_REGISTRANT_COUNTRY_LOCAL', 'MY');
 define('ICA_DEFAULT_CURRENCY',         'EUR');
+define('ICA_CIVICRM_EVENT_ID',         '1');
 
 
 // constants: registration fees
@@ -30,44 +31,50 @@ define('ICA_REGISTRANT_ATTENDING',     'registrant_attending');
 define('ICA_REGISTRANT_COUNTRY',       'country');
 define('ICA_EVENT_BIRTH_DATE',         'birth_date');
 define('ICA_EVENT_YOUTH',              'youth');
-define('ICA_MEMBER_ORGANISATION',      'member_organisation');
+define('ICA_MEMBER_ORGANISATION',      'registrant_represents');
 
 // matrix
 define('ICA_EVENT_MATRIX',             'group_registration_table');
 
 // submission data
 define('ICA_REGISTRANT_PREFIX',        'registrant_');
+define('ICA_ORGANISATION_PREFIX',      'organisation_');
 define('ICA_PARTNER_PREFIX',           'partner_');
 
 // DEFINE matrix fields
 global $ica_event_matrix_fields_group_registration;
 $ica_event_matrix_fields_group_registration = array(
-    1  => 'registrant_title',
-    2  => 'registrant_prefix',
+    1  => 'registrant_prefix',
+    2  => 'registrant_formal_title',
     3  => 'registrant_last_name',
     4  => 'registrant_first_name',
     5  => 'registrant_badge_name',
     6  => 'registrant_email',
     7  => 'registrant_languages',
     8  => 'partner',
-    9  => 'partner_badge',
-    10 => 'registrant_comments',
-    11 => 'birth_date',
-    12 => 'registrant_organization_name',
-    13 => 'registrant_position',
+    9  => 'partner_first_name',
+    10 => 'partner_last_name',
+    11 => 'partner_badge',
+    12 => 'registrant_comments',
+    13 => 'birth_date',
+    14 => '???registrant_organization_name???',
+    15 => 'registrant_position',
   );
 
 global $ica_event_registration_properties;
 $ica_event_registration_properties = array(
-        'first_name' => 'first_name', 
-        'last_name'  => 'last_name',
-        'prefix'     => 'prefix_id', 
-        'position'   => 'custom_position',
-        'languages'  => 'custom_languages',
-        'badge'      => 'custom_badge',
-        'comments'   => 'custom_comments',
-        'youth'      => 'birth_date',
-        'email'      => 'email');
+        'first_name'         => 'first_name', 
+        'last_name'          => 'last_name',
+        'organization_name'  => 'organization_name',
+        'prefix'             => 'prefix_id', 
+        'position'           => 'custom_position',
+        'languages'          => 'custom_languages',
+        'represents'         => 'custom_represented_organisation',
+        'badge'              => 'custom_badge',
+        'comments'           => 'note',
+        'youth'              => 'birth_date',
+        'email'              => 'email',
+        'phone'              => 'phone');
 
 /**
  * translate a the matrix's indices to field_names using $ica_event_matrix_fields constant
@@ -106,6 +113,11 @@ function ica_event_get_matrix_values($raw_matrix_data, $matrix_fields) {
 function ica_event_get_form_values(&$form, &$form_state) {
   $values = array();
 
+  // check if it's a webform
+  if (!is_object($form['#node']) || !isset($form['#node']->webform)) {
+    return $values;
+  }
+  
   // first, extract values from $form_state
   $webform = $form['#node']->webform;
   $components = $webform['components'];
