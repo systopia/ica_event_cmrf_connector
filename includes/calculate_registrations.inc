@@ -62,7 +62,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   $organisation_id    = ica_event_get_value(ICA_MEMBER_ORGANISATION, $current_values);
   $registrant_country = ica_event_get_value(ICA_REGISTRANT_COUNTRY, $current_values);
   
-  
+
   // FIRST: create organisation
   global $ica_event_registration_properties;
   $organisation = $classes['organisation'];
@@ -167,7 +167,8 @@ function ica_event_copy_fields(&$registration, &$values, $fields, $prefix = '') 
     if (isset($values[$data_key])) {
       $registration[$registration_key] = $values[$data_key];
     } else {
-      $registration[$registration_key] = '';
+      // don't set empty fields
+      // $registration[$registration_key] = '';
     }
   }
 }
