@@ -104,7 +104,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
   if ($main_contact_attending) {
     // main contact attending
-    $main_registration['participant_role'] = 'Main Contact,Participant';
+    $main_registration['participant_role'] = array('Main Contact', 'Participant');
 
   } else {
     // Main contact NOT attending
@@ -141,6 +141,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
 
       $registration = $classes[$class];
       ica_event_copy_fields($registration, $values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
+      $registration['participant_role'] = 'Group Participant';
       $registrations[$registrant_key] = $registration;
 
       if (!empty($values[ICA_EVENT_PARTNER])) {
