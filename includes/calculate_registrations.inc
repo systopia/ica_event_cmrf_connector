@@ -21,28 +21,28 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
                             '_class'                   => 'participant',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Attendee',
+                            'participant_role'         => 'Participant',
                             'participant_fee_level'    => 'Participant'),
     'member_int'  => array( 'participant_fee_amount'   => ICA_EVENT_FEE_MEMBER_INT,
                             '_class'                   => 'member_int',
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Attendee',
+                            'participant_role'         => 'Participant',
                             'participant_fee_level'    => 'International Member'),
     'local'       => array( 'participant_fee_amount'   => ICA_EVENT_FEE_LOCAL,
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'local',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Attendee',
+                            'participant_role'         => 'Participant',
                             'participant_fee_level'    => 'Local Member'),
     'youth'       => array( 'participant_fee_amount'   => ICA_EVENT_FEE_YOUTH,
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'youth',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Attendee',
+                            'participant_role'         => 'Participant',
                             'participant_fee_level'    => 'Youth'),
     'partner'     => array( 'participant_fee_amount'   => ICA_EVENT_FEE_PARTNER,
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
@@ -62,48 +62,57 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   $organisation_id    = ica_event_get_value(ICA_MEMBER_ORGANISATION, $current_values);
   $registrant_country = ica_event_get_value(ICA_REGISTRANT_COUNTRY, $current_values);
   
+  
   // FIRST: create organisation
   global $ica_event_registration_properties;
   $organisation = $classes['organisation'];
   ica_event_copy_fields($organisation, $current_values, $ica_event_registration_properties, ICA_ORGANISATION_PREFIX);
   $registrations['organisation'] = $organisation;
 
+
   // THEN: create main contact
+  $main_contact_youth = ica_event_get_value(ICA_EVENT_BIRTH_DATE, $current_values);
+  if (ica_event_is_youth($main_contact_youth)) {
+    // YOUNG PARTICIPANT
+    $class = 'youth';
+
+  } elseif ($registrant_country == ICA_REGISTRANT_COUNTRY_LOCAL) {
+    // LOCAL PARTICIPANT
+    $class = 'local';
+
+  } elseif ($organisation_id) {
+    // INTERNATIONAL MEMBER
+    $class = 'member_int';
+
+  } else {
+    // PARTICIPANT
+    $class = 'participant';
+  }
+  $main_registration = $classes[$class]; 
+  ica_event_copy_fields($main_registration, $current_values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
+
+  // add the partner
+  $main_contact_has_partner = ica_event_get_value(ICA_EVENT_FEE_PARTNER, $current_values);
+  if ($main_contact_has_partner) {
+    $partner_registration = $classes['partner'];
+    $partner_registration['participant_role'] = 'Partner/Spouse';
+    $partner_registration['partner_of'] = 'main';
+    ica_event_copy_fields($partner_registration, $current_values, $ica_event_registration_properties, ICA_PARTNER_PREFIX);
+    $registrations['main_partner'] = $partner_registration;
+  }
+
   $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
   if ($main_contact_attending) {
+    // main contact attending
+    $main_registration['participant_role'] = 'Main Contact,Participant';
 
-    $main_contact_youth = ica_event_get_value(ICA_EVENT_BIRTH_DATE, $current_values);
-    if (ica_event_is_youth($main_contact_youth)) {
-      // YOUNG PARTICIPANT
-      $class = 'youth';
-
-    } elseif ($registrant_country == ICA_REGISTRANT_COUNTRY_LOCAL) {
-      // LOCAL PARTICIPANT
-      $class = 'local';
-
-    } elseif ($organisation_id) {
-      // INTERNATIONAL MEMBER
-      $class = 'member_int';
-
-    } else {
-      // PARTICIPANT
-      $class = 'participant';
-    }
-
-    // use the derived class information as a template for the registration
-    $main_registration = $classes[$class]; 
-    ica_event_copy_fields($main_registration, $current_values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
-    $registrations['main'] = $main_registration;
-
-    // add the partner
-    $main_contact_has_partner = ica_event_get_value(ICA_EVENT_FEE_PARTNER, $current_values);
-    if ($main_contact_has_partner) {
-      $partner_registration = $classes['partner'];
-      $partner_registration['partner_of'] = 'main';
-      ica_event_copy_fields($partner_registration, $current_values, $ica_event_registration_properties, ICA_PARTNER_PREFIX);
-      $registrations['main_partner'] = $partner_registration;
-    }
+  } else {
+    // Main contact NOT attending
+    $main_registration['participant_role'] = 'Main Contact';
   }
+  $registrations['main'] = $main_registration;
+
+
 
   // THEN: process all people in the matrix;
   global $ica_event_matrix_fields_group_registration;

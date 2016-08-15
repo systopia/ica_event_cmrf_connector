@@ -57,7 +57,7 @@ $ica_event_matrix_fields_group_registration = array(
     11 => 'partner_badge',
     12 => 'registrant_comments',
     13 => 'birth_date',
-    14 => '???registrant_organization_name???',
+    14 => 'registrant_organisation_badge',
     15 => 'registrant_position',
   );
 
@@ -71,6 +71,7 @@ $ica_event_registration_properties = array(
         'languages'          => 'custom_languages',
         'represents'         => 'custom_represented_organisation',
         'badge'              => 'custom_badge',
+        'organisation_badge' => 'custom_organisation_badge',
         'comments'           => 'note',
         'youth'              => 'birth_date',
         'email'              => 'email',
