@@ -39,7 +39,7 @@ function ica_event_process_submission($node, $submission_data) {
   }
 
   // SUBMIT
-  error_log(json_encode($submission));
+  error_log("SUBMISSION: " . json_encode($submission));
   // $submission_policy = array();
   // ica_event_cmrf_connector_sendCall('Registration', 'create', $submission);
 }
