@@ -63,19 +63,26 @@ $ica_event_matrix_fields_group_registration = array(
 
 global $ica_event_registration_properties;
 $ica_event_registration_properties = array(
-        'first_name'         => 'first_name', 
-        'last_name'          => 'last_name',
-        'organization_name'  => 'organization_name',
-        'prefix'             => 'prefix_id', 
-        'position'           => 'custom_position',
-        'languages'          => 'custom_languages',
-        'represents'         => 'custom_represented_organisation',
-        'badge'              => 'custom_badge',
-        'organisation_badge' => 'custom_organisation_badge',
-        'comments'           => 'participant_note',
-        'youth'              => 'birth_date',
-        'email'              => 'email',
-        'phone'              => 'phone');
+        'first_name'             => 'first_name', 
+        'last_name'              => 'last_name',
+        'organization_name'      => 'organization_name',
+        'prefix'                 => 'prefix_id', 
+        'position'               => 'custom_position',
+        'languages'              => 'custom_languages',
+        'represents'             => 'custom_represented_organisation',
+        'badge'                  => 'custom_badge',
+        'organisation_badge'     => 'custom_organisation_badge',
+        'comments'               => 'participant_note',
+        'youth'                  => 'birth_date',
+        'email'                  => 'email',
+        'phone'                  => 'phone',
+        'street_address'         => 'street_address',
+        'supplemental_address_1' => 'supplemental_address_1',
+        'supplemental_address_2' => 'supplemental_address_2',
+        'postal_code'            => 'postal_code',
+        'city'                   => 'city',
+        'country'                => 'country',
+        );
 
 /**
  * translate a the matrix's indices to field_names using $ica_event_matrix_fields constant
