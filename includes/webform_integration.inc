@@ -5,6 +5,7 @@
  */
 
 // constants: general
+define('ICA_EVENT_SUBMISSION_PREFIX',  'GA2017');
 define('ICA_EVENT_FORM_IDS',           'webform_client_form_1,webform_client_form_3,webform_client_form_5');
 define('ICA_EVENT_YOUTH_MAX_BIRTHDAY', '1987-09-30');
 define('ICA_REGISTRANT_COUNTRY_LOCAL', 'MY');

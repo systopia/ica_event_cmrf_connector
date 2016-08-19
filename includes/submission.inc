@@ -10,15 +10,17 @@ include_once('calculate_registrations.inc');
 /**
  * AJAX call handler for 'discount code field changed'
  */
-function ica_event_submission(&$form, &$form_state) {
+function ica_event_process_submission($node, $submission) {
+  // we don't do anything until it's actually submitted
+  // if (empty($submission['completed'])) return;
 
-  // TODO: calculate the registration fee
-  $registrations = ica_event_calculate_registrations($form, $form_state);
+  // calculate the registration info
+  $registrations = ica_event_calculate_registrations_with_submission($node, $submission);
 
   // compile registration data from the form_values
   $submission = array();
   $submission['submission_date']         = date('YmdHis');
-  $submission['registration_id']         = "SUBMISSION-{$form['#node']->nid}-{$form['#node']->sid}-" . rand();
+  $submission['registration_id']         = ICA_EVENT_SUBMISSION_PREFIX . "-{$submission['nid']}-{$submission['sid']}";
   $submission['event_id']                = ICA_CIVICRM_EVENT_ID;
   $submission['additional_participants'] = array();
 

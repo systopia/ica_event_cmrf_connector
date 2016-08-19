@@ -13,7 +13,7 @@ include_once('webform_integration.inc');
  *
  * @return array: registration data
  */
-function ica_event_calculate_registrations(&$form, &$form_state) {
+function ica_event_calculate_registrations($current_values, $matrix_data) {
   // FIRST DEFINE SOME BASIC CLASSES / FIELDS
   $classes = array(
     'participant' => array( 'participant_fee_amount'   => ICA_EVENT_FEE_PARTICIPANT,
@@ -58,7 +58,6 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   
   // get some values
   $registrations      = array();
-  $current_values     = ica_event_get_form_values($form, $form_state);
   $organisation_id    = ica_event_get_value(ICA_MEMBER_ORGANISATION, $current_values);
   $registrant_country = ica_event_get_value(ICA_REGISTRANT_COUNTRY, $current_values);
   
@@ -114,11 +113,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
 
 
 
-  // THEN: process all people in the matrix;
-  global $ica_event_matrix_fields_group_registration;
-  $matrix_serialised = ica_event_get_value(ICA_EVENT_MATRIX, $current_values);
-  $matrix_data = ica_event_get_matrix_values($matrix_serialised, $ica_event_matrix_fields_group_registration);
-  
+  // THEN: process all people in the matrix;  
   if ($matrix_data) {
     foreach ($matrix_data as $row_nr => $values) {
       $registrant_key = "additional_{$row_nr}";
@@ -176,6 +171,56 @@ function ica_event_copy_fields(&$registration, &$values, $fields, $prefix = '') 
 
 
 /**
+ * this will compile the registration information based on the form data
+ */
+function ica_event_calculate_registrations_with_form_data(&$form, &$form_state) {
+  // compile current value
+  $current_values = ica_event_get_form_values($form, $form_state);
+
+  // compile current matrix values
+  global $ica_event_matrix_fields_group_registration;
+  $matrix_serialised = ica_event_get_value(ICA_EVENT_MATRIX, $current_values);
+  $matrix_data = ica_event_get_matrix_values($matrix_serialised, $ica_event_matrix_fields_group_registration);
+
+  // and call the main function
+  return ica_event_calculate_registrations($current_values, $matrix_data);
+}
+
+/**
+ * this will compile the registration information based on submission data
+ */
+function ica_event_calculate_registrations_with_submission($node, $submission) {
+  // resolve indexed values
+  $submitted_values = array();
+  foreach ($submission as $key => $value) {
+    if (is_numeric($key)) {
+      $key = $node->webform->components[$key];
+    }
+
+    if (is_array($value) && count($value) == 1) {
+      $submitted_values[$key] = reset($value);
+    } else {
+      $submitted_values[$key] = $value;
+    }
+  }
+
+  // compile current matrix values
+  global $ica_event_matrix_fields_group_registration;
+  $matrix_serialised = ica_event_get_value(ICA_EVENT_MATRIX, $submitted_values);
+  $matrix_data = ica_event_get_matrix_values($matrix_serialised, $ica_event_matrix_fields_group_registration);
+
+  // and call the main function
+  return ica_event_calculate_registrations($submitted_values, $matrix_data);
+}
+
+
+
+
+/***************************************************
+ **             HELPER FUNCTIONS                  **
+ **************************************************/
+
+/**
  * safe way to get a value from the variables
  */
 function ica_event_get_value($key, &$variables) {
@@ -184,12 +229,6 @@ function ica_event_get_value($key, &$variables) {
   } else {
     return NULL;
   }
-}
-
-
-function ica_event_is_local_member_org($organisation_id) {
-  // TODO: implement
-  return FALSE;
 }
 
 /**
