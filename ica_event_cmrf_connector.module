@@ -71,9 +71,16 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
   }
 }
 
-function ica_event_webform_submission_insert($node, $submission) {
+function ica_event_cmrf_connector_webform_submission_insert($node, $submission) {
   error_log("ica_event_webform_submission_insert()");
-  error_log(json_encode($node));
+  // error_log(json_encode($node));
+  error_log(json_encode($submission));
+}
+
+
+function ica_event_cmrf_connector_webform_submission_update($node, $submission) {
+  error_log("ica_event_cmrf_connector_webform_submission_update()");
+  // error_log(json_encode($node));
   error_log(json_encode($submission));
 }
 
