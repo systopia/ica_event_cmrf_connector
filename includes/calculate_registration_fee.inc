@@ -16,7 +16,7 @@ include_once('calculate_registrations.inc');
  *                'explanations' => array (reasons)
  */
 function ica_event_calculate_registration_fee(&$form, &$form_state) {
-  $registrations = ica_event_calculate_registrations($form, $form_state);
+  $registrations = ica_event_calculate_registrations_with_form_data($form, $form_state);
 
   // start compiling the overview
   $registration_info = array(

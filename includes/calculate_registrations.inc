@@ -149,7 +149,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
     }
   }
 
-  error_log(json_encode($registrations));
+  // error_log(json_encode($registrations));
   return $registrations;
 }
 
