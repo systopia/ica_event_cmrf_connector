@@ -197,7 +197,7 @@ function ica_event_calculate_registrations_with_submission($node, $submission) {
       // this is the data array
       foreach ($svalue as $key => $value) {
         if (is_numeric($key)) {
-          $key = $node->webform->components[$key];
+          $key = $node->webform['components'][$key]['form_key'];
         }
 
         if (is_array($value) && count($value) == 1) {
