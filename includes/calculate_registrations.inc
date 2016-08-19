@@ -21,35 +21,35 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
                             '_class'                   => 'participant',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Participant',
+                            'participant_role'         => array('Participant'),
                             'participant_fee_level'    => 'Participant'),
     'member_int'  => array( 'participant_fee_amount'   => ICA_EVENT_FEE_MEMBER_INT,
                             '_class'                   => 'member_int',
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Participant',
+                            'participant_role'         => array('Participant'),
                             'participant_fee_level'    => 'International Member'),
     'local'       => array( 'participant_fee_amount'   => ICA_EVENT_FEE_LOCAL,
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'local',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Participant',
+                            'participant_role'         => array('Participant'),
                             'participant_fee_level'    => 'Local Member'),
     'youth'       => array( 'participant_fee_amount'   => ICA_EVENT_FEE_YOUTH,
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'youth',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Participant',
+                            'participant_role'         => array('Participant'),
                             'participant_fee_level'    => 'Youth'),
     'partner'     => array( 'participant_fee_amount'   => ICA_EVENT_FEE_PARTNER,
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'partner',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
-                            'participant_role'         => 'Partner',
+                            'participant_role'         => array('Partner'),
                             'participant_fee_level'    => 'Partner'),
     'organisation'=> array( '_class'                   => 'organisation',
                             'contact_type'             => 'Organization',
@@ -95,7 +95,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
   $main_contact_has_partner = ica_event_get_value(ICA_EVENT_FEE_PARTNER, $current_values);
   if ($main_contact_has_partner) {
     $partner_registration = $classes['partner'];
-    $partner_registration['participant_role'] = 'Partner/Spouse';
+    $partner_registration['participant_role'] = array('Partner/Spouse');
     $partner_registration['partner_of'] = 'main';
     ica_event_copy_fields($partner_registration, $current_values, $ica_event_registration_properties, ICA_PARTNER_PREFIX);
     $registrations['main_partner'] = $partner_registration;
@@ -108,7 +108,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
 
   } else {
     // Main contact NOT attending
-    $main_registration['participant_role'] = 'Main Contact';
+    $main_registration['participant_role'] = array('Main Contact');
   }
   $registrations['main'] = $main_registration;
 
@@ -141,7 +141,7 @@ function ica_event_calculate_registrations(&$form, &$form_state) {
 
       $registration = $classes[$class];
       ica_event_copy_fields($registration, $values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
-      $registration['participant_role'] = 'Group Participant';
+      $registration['participant_role'] = array('Group Participant', 'Participant');
       $registrations[$registrant_key] = $registration;
 
       if (!empty($values[ICA_EVENT_PARTNER])) {
