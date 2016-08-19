@@ -192,15 +192,22 @@ function ica_event_calculate_registrations_with_form_data(&$form, &$form_state) 
 function ica_event_calculate_registrations_with_submission($node, $submission) {
   // resolve indexed values
   $submitted_values = array();
-  foreach ($submission as $key => $value) {
-    if (is_numeric($key)) {
-      $key = $node->webform->components[$key];
-    }
+  foreach ($submission as $skey => $svalue) {
+    if ($skey == 'data') {
+      // this is the data array
+      foreach ($svalue as $key => $value) {
+        if (is_numeric($key)) {
+          $key = $node->webform->components[$key];
+        }
 
-    if (is_array($value) && count($value) == 1) {
-      $submitted_values[$key] = reset($value);
+        if (is_array($value) && count($value) == 1) {
+          $submitted_values[$key] = reset($value);
+        } else {
+          $submitted_values[$key] = $value;
+        }
+      }
     } else {
-      $submitted_values[$key] = $value;
+      $submitted_values[$skey] = $svalue;
     }
   }
 
@@ -210,6 +217,7 @@ function ica_event_calculate_registrations_with_submission($node, $submission) {
   $matrix_data = ica_event_get_matrix_values($matrix_serialised, $ica_event_matrix_fields_group_registration);
 
   // and call the main function
+  error_log("VALUES: " . json_encode($submitted_values));
   return ica_event_calculate_registrations($submitted_values, $matrix_data);
 }
 

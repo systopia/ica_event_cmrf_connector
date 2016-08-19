@@ -20,7 +20,7 @@ function ica_event_process_submission($node, $submission_data) {
   // compile registration data from the form_values
   $submission = array();
   $submission['submission_date']         = date('YmdHis');
-  $submission['registration_id']         = ICA_EVENT_SUBMISSION_PREFIX . "-{$submission_data['nid']}-{$submission_data['sid']}";
+  $submission['registration_id']         = ICA_EVENT_SUBMISSION_PREFIX . "-{$submission_data->nid}-{$submission_data->sid}";
   $submission['event_id']                = ICA_CIVICRM_EVENT_ID;
   $submission['additional_participants'] = array();
 
