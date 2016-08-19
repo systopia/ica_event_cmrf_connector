@@ -7,7 +7,6 @@
 include_once('calculate_registrations.inc');
 
 
-
 /**
  * AJAX call handler for 'discount code field changed'
  */
@@ -19,7 +18,7 @@ function ica_event_submission(&$form, &$form_state) {
   // compile registration data from the form_values
   $submission = array();
   $submission['submission_date']         = date('YmdHis');
-  $submission['registration_id']         = "TODO-" . $form['#node']->nid . '-' . rand();
+  $submission['registration_id']         = "SUBMISSION-{$form['#node']->nid}-{$form['#node']->sid}-" . rand();
   $submission['event_id']                = ICA_CIVICRM_EVENT_ID;
   $submission['additional_participants'] = array();
 
@@ -42,3 +41,4 @@ function ica_event_submission(&$form, &$form_state) {
   // $submission_policy = array();
   // ica_event_cmrf_connector_sendCall('Registration', 'create', $submission);
 }
+
