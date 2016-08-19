@@ -24,7 +24,7 @@ include_once('calculate_registrations.inc');
  */
 function ica_event_process_submission($node, $submission_data) {
   // we don't do anything until it's actually submitted
-  if (empty($submission_data['completed'])) return;
+  if (empty($submission_data->completed)) return;
 
   // calculate the registration info
   $registrations = ica_event_calculate_registrations_with_submission($node, $submission_data);
