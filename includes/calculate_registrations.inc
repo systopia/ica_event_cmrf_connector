@@ -151,6 +151,10 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
       $registration['participant_role'] = array('Group Participant', 'Participant');
       $registrations[$registrant_key] = $registration;
 
+      if (!empty($main_registration['custom_represented_organisation'])) {
+        $registration['custom_represented_organisation'] = $main_registration['custom_represented_organisation'];
+      }
+
       if (!empty($values[ICA_EVENT_PARTNER])) {
         $partner_key = "additional_{$row_nr}_partner";
         $partner_registration = $classes['partner'];
