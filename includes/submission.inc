@@ -24,8 +24,13 @@ include_once('calculate_registrations.inc');
  */
 function ica_event_process_submission($node, $submission_data) {
   // we don't do anything until it's actually submitted
+  if (!empty($submission_data->is_draft)) return;
   if (empty($submission_data->completed)) return;
-  if (empty($submission_data->is_new))    return;  
+
+  if ($submission_data->completed != $submission_data->modified) {
+    // TODO: we cannot handle updates/edits
+    return;
+  }
 
   // calculate the registration info
   $registrations = ica_event_calculate_registrations_with_submission($node, $submission_data);
@@ -58,7 +63,9 @@ function ica_event_process_submission($node, $submission_data) {
 
   // SUBMIT
   error_log("SUBMISSION: " . json_encode($submission));
-  // $submission_policy = array();
-  // ica_event_cmrf_connector_sendCall('Registration', 'create', $submission);
+  $submission_policy = array(
+    'retry' => 1
+  );
+  ica_event_cmrf_connector_sendCall('Registration', 'create', $submission, $submission_policy);
 }
 
