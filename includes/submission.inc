@@ -45,7 +45,7 @@ function ica_event_process_submission($node, $submission_data) {
   // add version info
   $info_file   = drupal_get_path('module', 'ica_event_cmrf_connector') . '/ica_event_cmrf_connector.info';
   $module_info = drupal_parse_info_file($info_file);
-  $submission['version'] = $module_info['version'];
+  $submission['created_version'] = $module_info['version'];
 
   foreach ($registrations as $registration_key => $registration) {
     // remove unecessary stuff
