@@ -51,6 +51,9 @@ function ica_event_process_submission($node, $submission_data) {
     // remove unecessary stuff
     if (isset($registration['_class'])) unset($registration['_class']);
 
+    // set they key
+    $registration['participant_key'] = $registration_key;
+
     // add to lists
     if ($registration_key == 'main') {
       $submission['participant'] = $registration;
