@@ -38,6 +38,10 @@ define('ICA_EVENT_FEE_PARTNER',        100.00);
 define('ICA_EVENT_AMOUNT',             'amount');
 define('ICA_EVENT_DISCOUNTCODE',       'discount_code');
 
+// relevant fields for prefill
+define('ICA_GENERAL_COUNTRY',          'general_country');
+define('ICA_REGISTRANT_ORG_BADGE',     'registrant_organisation_badge');
+
 // relevant fields for price calculation
 define('ICA_EVENT_PARTNER',            'partner');
 define('ICA_REGISTRANT_ATTENDING',     'registrant_attending');
@@ -52,6 +56,7 @@ define('ICA_EVENT_MATRIX',             'group_registration_table');
 // submission data
 define('ICA_REGISTRANT_PREFIX',        'registrant_');
 define('ICA_ORGANISATION_PREFIX',      'organisation_');
+define('ICA_BILLING_PREFIX',           'billing_');
 define('ICA_PARTNER_PREFIX',           'partner_');
 
 // DEFINE matrix fields

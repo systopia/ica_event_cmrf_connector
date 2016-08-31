@@ -45,6 +45,10 @@ function ica_event_cmrf_connector_sendCall($entity, $action, $parameters, $optio
  */
 function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
   if (in_array($form_id, explode(',', ICA_EVENT_FORM_IDS))) {
+    // copy some prefill/defaul values
+    include_once('includes/prefill.inc');
+    ica_event_process_prefill($form, $form_state);
+
     // calculate amount
     if (isset($form['submitted'][ICA_EVENT_AMOUNT])) {
       include_once('includes/calculate_registration_fee.inc');
