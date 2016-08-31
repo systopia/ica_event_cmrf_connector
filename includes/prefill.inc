@@ -48,7 +48,9 @@ function ica_event_process_prefill(&$form, $form_state) {
     $first_name = $current_values["{$prefix}first_name"];
     $last_name  = $current_values["{$prefix}last_name"];
     $badge_default = trim("{$title} {$first_name} {$last_name}");
-    _ica_event_do_prefill($form, $badge_default, "{$prefix}badge");
+    if (!empty($badge_default)) {
+      _ica_event_do_prefill($form, $badge_default, "{$prefix}badge");
+    }
   }
 }
 
