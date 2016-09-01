@@ -35,7 +35,7 @@
     function setOrganisationBatchName() {
       var organisation_name = $("input[name='submitted[organisation_organization_name]']").val();
       var badge_name = organisation_name.trim().substring(0, 32);
-      $("input[name='submitted[organisation_badge]']").val(badge_name);
+      $("input[name='submitted[registrant_organisation_badge]']").val(badge_name);
     }
 
     $("input[name='submitted[registrant_title]']").change(setRegistrantBatchName);
