@@ -95,7 +95,7 @@
       }
     }
 
-    function processMatrixFieldChange(var e) {
+    function processMatrixFieldChange(e) {
       console.log(e.target.name);
       if (e.target.name.match("submitted\\[group_registration_table\\]\\[[\\d+]\\]\\[[\\d+]\\]")) {
         var ids = e.target.name.match("[\\d+]\\]\\[[\\d+]")[0].split("][");
