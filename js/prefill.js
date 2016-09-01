@@ -32,11 +32,18 @@
       $("input[name='submitted[" + prefix + "_badge]']").val(badge_name.trim());
     }
 
+    function setOrganisationBatchName() {
+      var organisation_name = $("input[name='submitted[organisation_organization_name]']").val();
+      var badge_name = organisation_name.trim().substring(0, 32);
+      $("input[name='submitted[organisation_badge]']").val(badge_name);
+    }
+
     $("input[name='submitted[registrant_title]']").change(setRegistrantBatchName);
     $("input[name='submitted[registrant_first_name]']").change(setRegistrantBatchName);
     $("input[name='submitted[registrant_last_name]']").change(setRegistrantBatchName);
     $("input[name='submitted[partner_title]']").change(setPartnerBatchName);
     $("input[name='submitted[partner_first_name]']").change(setPartnerBatchName);
     $("input[name='submitted[partner_last_name]']").change(setPartnerBatchName);
+    $("input[name='submitted[organisation_organization_name]']").change(setOrganisationBatchName);
   });
 })(jQuery);
