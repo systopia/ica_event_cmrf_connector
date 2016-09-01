@@ -97,10 +97,11 @@
 
     function processMatrixFieldChange(e) {
       console.log(e.target.name);
-      if (e.target.name.match("submitted\\[group_registration_table\\]\\[[\\d+]\\]\\[[\\d+]\\]")) {
-        var ids = e.target.name.match("[\\d+]\\]\\[[\\d+]")[0].split("][");
-        var row = ids[0];
-        var index = ids[1];
+      if (e.target.name.match(/^submitted\[group_registration_table\]\[\d+\]\[\d+\]$/)) {
+        var ids = e.target.name.match(/\[\d+\]\[\d+\]$/)[0].split(/[\[\]]/);
+        var row = ids[1];
+        var index = ids[3];
+        console.log("row: " + row + ", index: " + index);
         if (matrix_triggers[index]) {
           var prefix = matrix_triggers[index];
           var formal_title = getFieldValue(prefix + 'formal_title', row);
