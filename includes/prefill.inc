@@ -30,7 +30,6 @@ function ica_event_process_prefill(&$form, $form_state) {
     ICA_ORGANISATION_PREFIX . 'postal_code'             => ICA_BILLING_PREFIX . 'postal_code',
     ICA_ORGANISATION_PREFIX . 'city'                    => ICA_BILLING_PREFIX . 'city',
     ICA_ORGANISATION_PREFIX . 'country'                 => ICA_BILLING_PREFIX . 'country',
-    ICA_GENERAL_COUNTRY                                 => ICA_BILLING_PREFIX . 'country',
     ICA_ORGANISATION_PREFIX . 'organization_name'       => ICA_REGISTRANT_ORG_BADGE,
   );
 
