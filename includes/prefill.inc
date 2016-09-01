@@ -36,7 +36,8 @@ function ica_event_process_prefill(&$form, $form_state) {
   $prefill_same_page = array(
     ICA_REGISTRANT_PREFIX . 'badge',
     ICA_REGISTRANT_PREFIX . 'organisation_badge',
-    ICA_PARTNER_PREFIX    . 'badge');
+    ICA_PARTNER_PREFIX    . 'badge',
+    ICA_EVENT_MATRIX);
 
 
   // run cross-page prefill on the form data

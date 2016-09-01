@@ -60,6 +60,7 @@ define('ICA_BILLING_PREFIX',           'billing_');
 define('ICA_PARTNER_PREFIX',           'partner_');
 
 // DEFINE matrix fields
+// WARNING: also adjust /js/prefill.js
 global $ica_event_matrix_fields_group_registration;
 $ica_event_matrix_fields_group_registration = array(
     1  => 'registrant_prefix',
@@ -74,7 +75,7 @@ $ica_event_matrix_fields_group_registration = array(
     10 => 'birth_date',
     11 => 'partner',
     12 => 'partner_prefix',
-    13 => 'partner_title',
+    13 => 'partner_formal_title',
     14 => 'partner_first_name',
     15 => 'partner_last_name',
     16 => 'partner_badge',

@@ -12,6 +12,7 @@
 +--------------------------------------------------------*/
 
 
+// General prefill functions
 (function($) {
   $(document).ready(function(){
 
@@ -24,7 +25,7 @@
     }
 
     function setBatchName(prefix) {
-      var title      = $("input[name='submitted[" + prefix + "_title]']").val();
+      var title      = $("input[name='submitted[" + prefix + "_formal_title]']").val();
       var first_name = $("input[name='submitted[" + prefix + "_first_name]']").val();
       var last_name  = $("input[name='submitted[" + prefix + "_last_name]']").val();
       var badge_name = title + " " + first_name + " " + last_name;
@@ -38,12 +39,80 @@
       $("input[name='submitted[registrant_organisation_badge]']").val(badge_name);
     }
 
-    $("input[name='submitted[registrant_title]']").change(setRegistrantBatchName);
+    $("input[name='submitted[registrant_formal_title]']").change(setRegistrantBatchName);
     $("input[name='submitted[registrant_first_name]']").change(setRegistrantBatchName);
     $("input[name='submitted[registrant_last_name]']").change(setRegistrantBatchName);
-    $("input[name='submitted[partner_title]']").change(setPartnerBatchName);
+    $("input[name='submitted[partner_formal_title]']").change(setPartnerBatchName);
     $("input[name='submitted[partner_first_name]']").change(setPartnerBatchName);
     $("input[name='submitted[partner_last_name]']").change(setPartnerBatchName);
     $("input[name='submitted[organisation_organization_name]']").change(setOrganisationBatchName);
   });
 })(jQuery);
+
+
+// Matrix prefill functions
+(function($) {
+  $(document).ready(function(){
+    // matrix mapping
+    var matrix_triggers = {
+      '2': 'registrant_',
+      '4': 'registrant_',
+      '3': 'registrant_',
+      '13': 'partner_',
+      '14': 'partner_',
+      '15': 'partner_'
+    };
+
+    var matrix_index = {
+      'registrant_formal_title': 2,
+      'registrant_first_name': 4,
+      'registrant_last_name': 3,
+      'registrant_badge_name': 5,
+      'partner_formal_title': 13,
+      'partner_first_name': 14,
+      'partner_last_name': 15,
+      'partner_badge_name': 16,
+    };
+
+
+    function getFieldValue(field_key, row) {
+      var index = matrix_index[field_key];
+      if (index) {
+        var selector = "input[name='submitted[group_registration_table][" + row + "][" + index + "]']";
+        console.log("getting " + selector);
+        return $(selector).val();
+      } else {
+        return null;
+      }
+    }
+
+    function setFieldValue(field_key, row, value) {
+      var index = matrix_index[field_key];
+      if (index) {
+        var selector = "input[name='submitted[group_registration_table][" + row + "][" + index + "]']";
+        console.log("setting " + selector + " to " + value);
+        $(selector).val(value);
+      }
+    }
+
+    function processMatrixFieldChange(var e) {
+      console.log(e.target.name);
+      if (e.target.name.match("submitted\\[group_registration_table\\]\\[[\\d+]\\]\\[[\\d+]\\]")) {
+        var ids = e.target.name.match("[\\d+]\\]\\[[\\d+]")[0].split("][");
+        var row = ids[0];
+        var index = ids[1];
+        if (matrix_triggers[index]) {
+          var prefix = matrix_triggers[index];
+          var formal_title = getFieldValue(prefix + 'formal_title', row);
+          var first_name   = getFieldValue(prefix + 'first_name', row);
+          var last_name    = getFieldValue(prefix + 'last_name', row);
+          
+          var badge_name = title + " " + first_name + " " + last_name;
+          setFieldValue(prefix + 'badge_name', row, badge_name);
+        }
+      }
+    }
+  });
+})(jQuery);
+
+
