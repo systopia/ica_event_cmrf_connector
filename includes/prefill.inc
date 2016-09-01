@@ -59,12 +59,10 @@ function ica_event_process_prefill(&$form, $form_state) {
 
 
 function _ica_event_do_prefill(&$form, $value, $field_name) {
-  error_log("Trying to fill {$field_name} with '{$value}'...");
   // only if target is being rendered:
   if (isset($form['submitted'][$field_name])) {
     // only if it's not already set
     if (empty($form['submitted'][$field_name]['#value'])) {
-      error_log("Found and filled.");
       $form['submitted'][$field_name]['#value'] = $value;
     }
   }
