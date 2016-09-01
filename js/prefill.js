@@ -25,10 +25,10 @@
     }
 
     function setBatchName(prefix) {
-      var title      = $("input[name='submitted[" + prefix + "_formal_title]']").val();
-      var first_name = $("input[name='submitted[" + prefix + "_first_name]']").val();
-      var last_name  = $("input[name='submitted[" + prefix + "_last_name]']").val();
-      var badge_name = title + " " + first_name + " " + last_name;
+      var formal_title = $("input[name='submitted[" + prefix + "_formal_title]']").val();
+      var first_name   = $("input[name='submitted[" + prefix + "_first_name]']").val();
+      var last_name    = $("input[name='submitted[" + prefix + "_last_name]']").val();
+      var badge_name   = formal_title + " " + first_name + " " + last_name;
 
       $("input[name='submitted[" + prefix + "_badge]']").val(badge_name.trim());
     }
@@ -107,7 +107,7 @@
           var first_name   = getFieldValue(prefix + 'first_name', row);
           var last_name    = getFieldValue(prefix + 'last_name', row);
           
-          var badge_name = title + " " + first_name + " " + last_name;
+          var badge_name = formal_title + " " + first_name + " " + last_name;
           setFieldValue(prefix + 'badge_name', row, badge_name);
         }
       }
