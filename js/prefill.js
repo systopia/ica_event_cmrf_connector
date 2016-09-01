@@ -115,7 +115,8 @@
     }
 
     // catch ALL change events on table for processing
-    $("table[id^=edit-group_registration_table]").change(processMatrixFieldChange);
+    $("article[id^=node-").change(processMatrixFieldChange);
+    // $("table[id^=edit-group_registration_table]").change(processMatrixFieldChange);
   });
 })(jQuery);
 
