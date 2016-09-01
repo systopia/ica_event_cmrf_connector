@@ -51,7 +51,7 @@ function ica_event_process_prefill(&$form, $form_state) {
   foreach ($prefill_same_page as $field_name) {
     if (isset($form['submitted'][$field_name])) {
       // element is there => attach JS
-      $form['#attached']['js'][] = drupal_get_path('module', 'ica_event_cmrf_connector') . 'js/prefill.js';
+      $form['#attached']['js'][] = drupal_get_path('module', 'ica_event_cmrf_connector') . '/js/prefill.js';
       break;
     }
   }
