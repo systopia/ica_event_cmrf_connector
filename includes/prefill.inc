@@ -16,7 +16,7 @@
  * Defines how a registration is submitted to CiviCRM
  */
 
-include_once('includes/webform_integration.inc');
+include_once('webform_integration.inc');
 
 /**
  * 
@@ -56,18 +56,6 @@ function ica_event_process_prefill(&$form, $form_state) {
       break;
     }
   }
-
-  // some special treatment case: compile badge name
-  // $prefix_list = array(ICA_REGISTRANT_PREFIX, ICA_PARTNER_PREFIX);
-  // foreach ($prefix_list as $prefix) {
-  //   $title      = $current_values["{$prefix}title"];
-  //   $first_name = $current_values["{$prefix}first_name"];
-  //   $last_name  = $current_values["{$prefix}last_name"];
-  //   $badge_default = trim("{$title} {$first_name} {$last_name}");
-  //   if (!empty($badge_default)) {
-  //     _ica_event_do_prefill($form, $badge_default, "{$prefix}badge");
-  //   }
-  // }
 }
 
 
