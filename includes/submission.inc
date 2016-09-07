@@ -104,9 +104,10 @@ function ica_event_process_submission($node, $submission_data) {
     // now create the order
     if (!empty($registration_products)) {
       watchdog(WATCHDOG_DEBUG, "Creating order {$submission['registration_id']}...");
-
+      global $user;
+      
       // create a new order
-      $order = commerce_order_new(0, 'checkout_checkout');
+      $order = commerce_order_new($user->uid, 'checkout_checkout');
       $order->order_number = $submission['registration_id'];
       commerce_order_save($order);
       $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
@@ -120,7 +121,7 @@ function ica_event_process_submission($node, $submission_data) {
       }
       
       commerce_order_save($order);
-      commerce_cart_order_session_save($order->order_id);
+      // commerce_cart_order_session_save($order->order_id);
       watchdog(WATCHDOG_INFO, 'Order created: checkout/' . $order->order_id);
     }
   }
