@@ -181,13 +181,13 @@ function ica_event_get_form_values(&$form, &$form_state) {
  */
 function ica_event_get_registration_fee($registration_class) {
   if (function_exists('commerce_product_load_by_sku')) {
-    error_log("Commerce function not found");
+    watchdog(WATCHDOG_DEBUG, "Commerce function not found");
     return 999;
   }
 
   $product = commerce_product_load_by_sku(ICA_EVENT_SUBMISSION_PREFIX . '-' . $registration_class);
   if (empty($product)) {
-    error_log("Product not found for SKU: " . ICA_EVENT_SUBMISSION_PREFIX . '-' . $registration_class);
+    watchdog(WATCHDOG_DEBUG, "Product not found for SKU: " . ICA_EVENT_SUBMISSION_PREFIX . '-' . $registration_class);
     return 99;
   }
 
@@ -195,13 +195,13 @@ function ica_event_get_registration_fee($registration_class) {
     // ignore the language for now...
     foreach ($price_set as $price) {
       if ($price['currency_code'] == ICA_DEFAULT_CURRENCY) {
-        error_log("Fee for {$registration_class} is " . ($price['amount']) / 100));
+        watchdog(WATCHDOG_DEBUG, "Fee for {$registration_class} is " . ($price['amount']) / 100));
         return $price['amount']) / 100;
       }
     }
   }
 
   // not found in ICA_DEFAULT_CURRENCY
-  error_log(json_encode($product->commerce_price));
+  watchdog(WATCHDOG_DEBUG, json_encode($product->commerce_price));
   return 99;
 }
