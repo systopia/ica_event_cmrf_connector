@@ -196,7 +196,7 @@ function ica_event_get_registration_fee($registration_class) {
     foreach ($price_set as $price) {
       if ($price['currency_code'] == ICA_DEFAULT_CURRENCY) {
         watchdog(WATCHDOG_DEBUG, "Fee for {$registration_class} is " . ($price['amount'] / 100));
-        return $price['amount']) / 100;
+        return $price['amount'] / 100;
       }
     }
   }
