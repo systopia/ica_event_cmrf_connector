@@ -120,6 +120,7 @@ function ica_event_process_submission($node, $submission_data) {
       }
       
       commerce_order_save($order);
+      commerce_cart_order_session_save($order->order_id);
       watchdog(WATCHDOG_INFO, 'Order created: checkout/' . $order->order_id);
     }
   }
