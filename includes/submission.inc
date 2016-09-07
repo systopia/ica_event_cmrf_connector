@@ -65,10 +65,42 @@ function ica_event_process_submission($node, $submission_data) {
   }
 
   // SUBMIT
-  error_log("SUBMISSION: " . json_encode($submission));
+  // error_log("SUBMISSION: " . json_encode($submission));
   $submission_policy = array(
     'retry' => 1
   );
   ica_event_cmrf_connector_sendCall('Registration', 'create', $submission, $submission_policy);
+
+
+
+
+
+
+  // NEXT: CREATE an order in Commerce
+
+  // TODO: get all products/quantities (array: product_id => count)
+  $registration_products = array();
+
+
+  if (!empty($registration_products) && function_exists('commerce_order_new')) {
+    global $user;
+
+    // create a new order
+    $order = commerce_order_new($user->uid, 'checkout_checkout');
+    $order->order_number = $submission['registration_id'];
+    commerce_order_save($order);
+    $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+
+    foreach ($registration_products as $product_id => $quantity) {
+      $product = commerce_product_load($product_id);
+      $line_item = commerce_product_line_item_new($product, $quantity, $order->order_id);
+      commerce_line_item_save($line_item);
+
+      $order_wrapper->commerce_line_items[] = $line_item;
+    }
+    
+    commerce_order_save($order);
+    error_log('Order created: checkout/' . $order->order_id);
+  }
 }
 

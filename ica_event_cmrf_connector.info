@@ -3,6 +3,10 @@ description = Will connect to CMRF core for submission
 core = 7.x
 dependencies[] = webform
 dependencies[] = cmrf_core
+dependencies[] = commerce (1.x)
+dependencies[] = commerce_product
+dependencies[] = commerce_checkout
+dependencies[] = commerce_line_item
 
 ; Information added by Drupal.org packaging script on 2014-10-18
 version = "7.x-1.x-dev"
