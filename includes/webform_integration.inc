@@ -25,14 +25,6 @@ define('ICA_DEFAULT_CURRENCY',         'EUR');
 define('ICA_CIVICRM_EVENT_ID',         '1');
 
 
-// constants: registration fees
-define('ICA_EVENT_FEE_YOUTH',          200.00);
-define('ICA_EVENT_FEE_LOCAL',          250.00);
-define('ICA_EVENT_FEE_MEMBER_INT',     750.00);
-define('ICA_EVENT_FEE_PARTICIPANT',    950.00);
-define('ICA_EVENT_FEE_PARTNER',        100.00);
-
-
 
 // active fields
 define('ICA_EVENT_AMOUNT',             'amount');
@@ -184,3 +176,31 @@ function ica_event_get_form_values(&$form, &$form_state) {
   return $values;
 }
 
+/**
+ * get a the (in ICA_DEFAULT_CURRENCY) from the appropriate Commerce product
+ */
+function ica_event_get_registration_fee($registration_class) {
+  if (function_exists('commerce_product_load_by_sku')) {
+    error_log("Commerce function not found");
+    return 999.99;
+  }
+
+  $product = commerce_product_load_by_sku(ICA_EVENT_SUBMISSION_PREFIX . '-' . $registration_class);
+  if (empty($product)) {
+    error_log("Product not found for SKU: " . ICA_EVENT_SUBMISSION_PREFIX . '-' . $registration_class);
+    return 99.99;
+  }
+
+  foreach ($product->commerce_price as $language => $price_set) {
+    // ignore the language for now...
+    foreach ($price_set as $price) {
+      if ($price['currency_code'] == ICA_DEFAULT_CURRENCY) {
+        return ((float) $price['amount']) / 100.00;
+      }
+    }
+  }
+
+  // not found in ICA_DEFAULT_CURRENCY
+  error_log(json_encode($product->commerce_price));
+  return 99.99;
+}

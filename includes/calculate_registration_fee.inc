@@ -40,11 +40,11 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
     );
 
   $registration_info['fees'] = array(
-    'participant' => ICA_EVENT_FEE_PARTICIPANT,
-    'member_int'  => ICA_EVENT_FEE_MEMBER_INT,
-    'local'       => ICA_EVENT_FEE_LOCAL,
-    'youth'       => ICA_EVENT_FEE_YOUTH,
-    'partner'     => ICA_EVENT_FEE_PARTNER,
+    'participant' => ica_event_get_registration_fee('participant'),
+    'member_int'  => ica_event_get_registration_fee('member_int'),
+    'local'       => ica_event_get_registration_fee('local'),
+    'youth'       => ica_event_get_registration_fee('youth'),
+    'partner'     => ica_event_get_registration_fee('partner'),
     );
 
   // count and calculate the registrations
@@ -55,11 +55,11 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
   }
 
   $registration_info['amount'] =
-      $registration_info['participant']  * ICA_EVENT_FEE_PARTICIPANT
-    + $registration_info['member_int']   * ICA_EVENT_FEE_MEMBER_INT
-    + $registration_info['local']        * ICA_EVENT_FEE_LOCAL
-    + $registration_info['youth']        * ICA_EVENT_FEE_YOUTH
-    + $registration_info['partner']      * ICA_EVENT_FEE_PARTNER;
+      $registration_info['participant']  * $registration_info['participant']
+    + $registration_info['member_int']   * $registration_info['member_int']
+    + $registration_info['local']        * $registration_info['local']
+    + $registration_info['youth']        * $registration_info['youth']
+    + $registration_info['partner']      * $registration_info['partner'];
 
   // error_log(json_encode($registration_info));
   return $registration_info;

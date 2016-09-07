@@ -28,35 +28,35 @@ include_once('webform_integration.inc');
 function ica_event_calculate_registrations($current_values, $matrix_data) {
   // FIRST DEFINE SOME BASIC CLASSES / FIELDS
   $classes = array(
-    'participant' => array( 'participant_fee_amount'   => ICA_EVENT_FEE_PARTICIPANT,
+    'participant' => array( 'participant_fee_amount'   => ica_event_get_registration_fee('participant'),
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'participant',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
                             'participant_role'         => array('Participant'),
                             'participant_fee_level'    => 'Participant'),
-    'member_int'  => array( 'participant_fee_amount'   => ICA_EVENT_FEE_MEMBER_INT,
+    'member_int'  => array( 'participant_fee_amount'   => ica_event_get_registration_fee('member_int'),
                             '_class'                   => 'member_int',
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
                             'participant_role'         => array('Participant'),
                             'participant_fee_level'    => 'International Member'),
-    'local'       => array( 'participant_fee_amount'   => ICA_EVENT_FEE_LOCAL,
+    'local'       => array( 'participant_fee_amount'   => ica_event_get_registration_fee('local'),
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'local',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
                             'participant_role'         => array('Participant'),
                             'participant_fee_level'    => 'Local Member'),
-    'youth'       => array( 'participant_fee_amount'   => ICA_EVENT_FEE_YOUTH,
+    'youth'       => array( 'participant_fee_amount'   => ica_event_get_registration_fee('youth'),
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'youth',
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
                             'participant_role'         => array('Participant'),
                             'participant_fee_level'    => 'Youth'),
-    'partner'     => array( 'participant_fee_amount'   => ICA_EVENT_FEE_PARTNER,
+    'partner'     => array( 'participant_fee_amount'   => ica_event_get_registration_fee('partner'),
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'partner',
                             'contact_type'             => 'Individual',
@@ -103,7 +103,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   ica_event_copy_fields($main_registration, $current_values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
 
   // add the partner
-  $main_contact_has_partner = ica_event_get_value(ICA_EVENT_FEE_PARTNER, $current_values);
+  $main_contact_has_partner = ica_event_get_value(ICA_EVENT_PARTNER, $current_values);
   if ($main_contact_has_partner) {
     $partner_registration = $classes['partner'];
     $partner_registration['participant_role'] = array('Partner/Spouse');
