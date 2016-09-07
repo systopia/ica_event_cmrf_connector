@@ -180,7 +180,7 @@ function ica_event_get_form_values(&$form, &$form_state) {
  * get a the (in ICA_DEFAULT_CURRENCY) from the appropriate Commerce product
  */
 function ica_event_get_registration_fee($registration_class) {
-  if (function_exists('commerce_product_load_by_sku')) {
+  if (!function_exists('commerce_product_load_by_sku')) {
     watchdog(WATCHDOG_DEBUG, "Commerce function not found");
     return 999;
   }
