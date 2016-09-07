@@ -78,29 +78,50 @@ function ica_event_process_submission($node, $submission_data) {
 
   // NEXT: CREATE an order in Commerce
 
-  // TODO: get all products/quantities (array: product_id => count)
-  $registration_products = array();
 
 
-  if (!empty($registration_products) && function_exists('commerce_order_new')) {
-    global $user;
 
-    // create a new order
-    $order = commerce_order_new($user->uid, 'checkout_checkout');
-    $order->order_number = $submission['registration_id'];
-    commerce_order_save($order);
-    $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+  if (function_exists('commerce_order_new')) {
+    // TODO: get all products/quantities (array: product_id => count)
+    $registration_products = array();
+    foreach ($registrations as $registration_key => $registration) {
+      $sku = ICA_EVENT_SUBMISSION_PREFIX . '-' . $registration['_class'];
+      $product = commerce_product_load_by_sku($sku);
+      if ($product) {
+        watchdog(WATCHDOG_DEBUG, "Product found!");
+        if (!isset($registration_products[$product->id])) {
+          $registration_products[$product->id] = 1;
+        } else {
+          $registration_products[$product->id] += 1;
+        }
+      } else {
+        watchdog(WATCHDOG_WARNING, "Product NOT found!");
+      }
 
-    foreach ($registration_products as $product_id => $quantity) {
-      $product = commerce_product_load($product_id);
-      $line_item = commerce_product_line_item_new($product, $quantity, $order->order_id);
-      commerce_line_item_save($line_item);
-
-      $order_wrapper->commerce_line_items[] = $line_item;
     }
-    
-    commerce_order_save($order);
-    error_log('Order created: checkout/' . $order->order_id);
+    watchdog(WATCHDOG_DEBUG, json_encode($registration_products));
+
+    // now create the order
+    if (!empty($registration_products)) {
+      watchdog(WATCHDOG_DEBUG, "Creating order {$submission['registration_id']}...");
+
+      // create a new order
+      $order = commerce_order_new(0, 'checkout_checkout');
+      $order->order_number = $submission['registration_id'];
+      commerce_order_save($order);
+      $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+
+      foreach ($registration_products as $product_id => $quantity) {
+        $product = commerce_product_load($product_id);
+        $line_item = commerce_product_line_item_new($product, $quantity, $order->order_id);
+        commerce_line_item_save($line_item);
+
+        $order_wrapper->commerce_line_items[] = $line_item;
+      }
+      
+      commerce_order_save($order);
+      watchdog(WATCHDOG_INFO, 'Order created: checkout/' . $order->order_id);
+    }
   }
 }
 
