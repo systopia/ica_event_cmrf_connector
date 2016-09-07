@@ -55,11 +55,11 @@ function ica_event_calculate_registration_fee(&$form, &$form_state) {
   }
 
   $registration_info['amount'] =
-      $registration_info['participant']  * $registration_info['participant']
-    + $registration_info['member_int']   * $registration_info['member_int']
-    + $registration_info['local']        * $registration_info['local']
-    + $registration_info['youth']        * $registration_info['youth']
-    + $registration_info['partner']      * $registration_info['partner'];
+      $registration_info['participant']  * $registration_info['fees']['participant']
+    + $registration_info['member_int']   * $registration_info['fees']['member_int']
+    + $registration_info['local']        * $registration_info['fees']['local']
+    + $registration_info['youth']        * $registration_info['fees']['youth']
+    + $registration_info['partner']      * $registration_info['fees']['partner'];
 
   // error_log(json_encode($registration_info));
   return $registration_info;
