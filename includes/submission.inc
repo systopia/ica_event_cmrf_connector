@@ -89,10 +89,10 @@ function ica_event_process_submission($node, $submission_data) {
       $product = commerce_product_load_by_sku($sku);
       if ($product) {
         watchdog(WATCHDOG_DEBUG, "Product found!");
-        if (!isset($registration_products[$product->id])) {
-          $registration_products[$product->id] = 1;
+        if (!isset($registration_products[$product->product_id])) {
+          $registration_products[$product->product_id] = 1;
         } else {
-          $registration_products[$product->id] += 1;
+          $registration_products[$product->product_id] += 1;
         }
       } else {
         watchdog(WATCHDOG_WARNING, "Product NOT found!");
