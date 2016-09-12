@@ -51,6 +51,14 @@ define('ICA_ORGANISATION_PREFIX',      'organisation_');
 define('ICA_BILLING_PREFIX',           'billing_');
 define('ICA_PARTNER_PREFIX',           'partner_');
 
+// payment mode
+define('ICA_PAYMENT_MODE',             'registration_payment_mode');
+define('ICA_PAYMENT_MODE_ONLINE',      'online');
+define('ICA_PAYMENT_MODE_OFFLINE',     'offline');
+define('ICA_PAYMENT_MODE_EFT',         'eft');
+
+
+
 // DEFINE matrix fields
 // WARNING: also adjust /js/prefill.js
 global $ica_event_matrix_fields_group_registration;

@@ -28,7 +28,7 @@ function ica_event_process_submission($node, $submission_data) {
   if (empty($submission_data->completed)) return;
 
   if ($submission_data->completed != $submission_data->modified) {
-    // TODO: we cannot handle updates/edits
+    // TODO: we don't process updates/edits
     return;
   }
 
@@ -40,6 +40,7 @@ function ica_event_process_submission($node, $submission_data) {
   $submission['submission_date']         = date('YmdHis');
   $submission['registration_id']         = ICA_EVENT_SUBMISSION_PREFIX . "-{$submission_data->nid}-{$submission_data->sid}";
   $submission['event_id']                = ICA_CIVICRM_EVENT_ID;
+  $submission['payment_mode']            = $submission_data[ICA_PAYMENT_MODE];
   $submission['additional_participants'] = array();
 
   // add version info
@@ -64,7 +65,7 @@ function ica_event_process_submission($node, $submission_data) {
     }
   }
 
-  // SUBMIT
+  // SUBMIT TO CIVICRM
   // error_log("SUBMISSION: " . json_encode($submission));
   $submission_policy = array(
     'retry' => 1
@@ -73,14 +74,7 @@ function ica_event_process_submission($node, $submission_data) {
 
 
 
-
-
-
   // NEXT: CREATE an order in Commerce
-
-
-
-
   if (function_exists('commerce_order_new')) {
     // TODO: get all products/quantities (array: product_id => count)
     $registration_products = array();
@@ -88,7 +82,7 @@ function ica_event_process_submission($node, $submission_data) {
       $sku = ICA_EVENT_SUBMISSION_PREFIX . '-' . $registration['_class'];
       $product = commerce_product_load_by_sku($sku);
       if ($product) {
-        watchdog(WATCHDOG_DEBUG, "Product found!");
+        // watchdog(WATCHDOG_DEBUG, "Product found!");
         if (!isset($registration_products[$product->product_id])) {
           $registration_products[$product->product_id] = 1;
         } else {
@@ -99,11 +93,11 @@ function ica_event_process_submission($node, $submission_data) {
       }
 
     }
-    watchdog(WATCHDOG_DEBUG, json_encode($registration_products));
+    // watchdog(WATCHDOG_DEBUG, json_encode($registration_products));
 
     // now create the order
     if (!empty($registration_products)) {
-      watchdog(WATCHDOG_DEBUG, "Creating order {$submission['registration_id']}...");
+      // watchdog(WATCHDOG_DEBUG, "Creating order {$submission['registration_id']}...");
       global $user;
       
       // create a new order
@@ -121,9 +115,16 @@ function ica_event_process_submission($node, $submission_data) {
       }
       
       commerce_order_save($order);
-      // commerce_cart_order_session_save($order->order_id);
-      watchdog(WATCHDOG_INFO, 'Order created: checkout/' . $order->order_id);
+      commerce_cart_order_session_save($order->order_id);
+      // watchdog(WATCHDOG_INFO, 'Order created: checkout/' . $order->order_id);
+
+      if ($submission_data[ICA_PAYMENT_MODE] == ICA_PAYMENT_MODE_ONLINE) {  
+        // redirect to payment page if online payment selected
+        drupal_goto('checkout/' . $order->order_id);
+      }
     }
+  } else {
+    watchdog(WATCHDOG_WARNING, "Commerce module not found!");
   }
 }
 
