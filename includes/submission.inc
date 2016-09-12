@@ -33,14 +33,15 @@ function ica_event_process_submission($node, $submission_data) {
   }
 
   // calculate the registration info
-  $registrations = ica_event_calculate_registrations_with_submission($node, $submission_data);
+  $submitted_values = array();
+  $registrations = ica_event_calculate_registrations_with_submission($node, $submission_data, $submitted_values);
 
   // compile registration data from the form_values
   $submission = array();
   $submission['submission_date']         = date('YmdHis');
   $submission['registration_id']         = ICA_EVENT_SUBMISSION_PREFIX . "-{$submission_data->nid}-{$submission_data->sid}";
   $submission['event_id']                = ICA_CIVICRM_EVENT_ID;
-  $submission['payment_mode']            = $submission_data[ICA_PAYMENT_MODE];
+  $submission['payment_mode']            = $submitted_values[ICA_PAYMENT_MODE];
   $submission['additional_participants'] = array();
 
   // add version info

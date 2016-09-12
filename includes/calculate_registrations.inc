@@ -205,9 +205,8 @@ function ica_event_calculate_registrations_with_form_data(&$form, &$form_state) 
 /**
  * this will compile the registration information based on submission data
  */
-function ica_event_calculate_registrations_with_submission($node, $submission) {
+function ica_event_calculate_registrations_with_submission($node, $submission, &$submitted_values) {
   // resolve indexed values
-  $submitted_values = array();
   foreach ($submission as $skey => $svalue) {
     if ($skey == 'data') {
       // this is the data array
