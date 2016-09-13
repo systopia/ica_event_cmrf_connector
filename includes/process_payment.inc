@@ -35,5 +35,6 @@ function ica_event_process_payment($order) {
     'retry' => 1
   );
   ica_event_cmrf_connector_sendCall('Registration', 'payment', $payment_info, $transmission_policy);
+  watchdog(WATCHDOG_DEBUG, "Order completed: {$order->order_number}");
 }
 
