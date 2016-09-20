@@ -106,7 +106,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   $main_contact_has_partner = ica_event_get_value(ICA_EVENT_PARTNER, $current_values);
   if ($main_contact_has_partner) {
     $partner_registration = $classes['partner'];
-    $partner_registration['participant_role'] = array('Partner/Spouse');
+    $partner_registration['participant_role'] = array('Partner');
     $partner_registration['partner_of'] = 'main';
     ica_event_copy_fields($partner_registration, $current_values, $ica_event_registration_properties, ICA_PARTNER_PREFIX);
     $registrations['main_partner'] = $partner_registration;
