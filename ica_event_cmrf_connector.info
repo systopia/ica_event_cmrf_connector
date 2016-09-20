@@ -9,10 +9,8 @@ dependencies[] = commerce_checkout
 dependencies[] = commerce_line_item
 dependencies[] = commerce_product_reference
 
-
-; Information added by Drupal.org packaging script on 2014-10-18
-version = "7.x-1.x-dev"
-core = "7.x"
+# version information
 project = "ica_event_cmrf_connector"
-datestamp = "1413658731"
+version = "7.x-0.5.dev"
+#datestamp = "1413658731"
 
