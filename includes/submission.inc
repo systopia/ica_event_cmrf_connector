@@ -80,6 +80,7 @@ function ica_event_process_submission($node, $submission_data) {
     // TODO: get all products/quantities (array: product_id => count)
     $registration_products = array();
     foreach ($registrations as $registration_key => $registration) {
+      if ($registration['_class'] == 'organisation') continue;
       $sku = ICA_EVENT_SUBMISSION_PREFIX . '-' . $registration['_class'];
       $product = commerce_product_load_by_sku($sku);
       if ($product) {
