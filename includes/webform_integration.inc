@@ -64,8 +64,8 @@ global $ica_event_matrix_fields_group_registration;
 $ica_event_matrix_fields_group_registration = array(
     1  => 'registrant_prefix',
     2  => 'registrant_formal_title',
-    3  => 'registrant_last_name',
-    4  => 'registrant_first_name',
+    3  => 'registrant_first_name',
+    4  => 'registrant_last_name',
     5  => 'registrant_badge_name',
     6  => 'registrant_email',
     7  => 'registrant_languages',
@@ -74,11 +74,10 @@ $ica_event_matrix_fields_group_registration = array(
     10 => 'youth_discount',
     11 => 'partner',
     12 => 'partner_prefix',
-    13 => 'partner_formal_title',
-    14 => 'partner_first_name',
-    15 => 'partner_last_name',
-    16 => 'partner_badge',
-    17 => 'registrant_comments',
+    13 => 'partner_first_name',
+    14 => 'partner_last_name',
+    15 => 'partner_badge',
+    16 => 'registrant_comments',
   );
 
 global $ica_event_registration_properties;
