@@ -78,6 +78,11 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   global $ica_event_registration_properties;
   $organisation = $classes['organisation'];
   ica_event_copy_fields($organisation, $current_values, $ica_event_registration_properties, ICA_ORGANISATION_PREFIX);
+
+  $billing_address = array();
+  ica_event_copy_fields($billing_address, $current_values, $ica_event_registration_properties, ICA_BILLING_PREFIX);
+  $organisation['billing'] = $billing_address;
+
   $registrations['organisation'] = $organisation;
 
 
