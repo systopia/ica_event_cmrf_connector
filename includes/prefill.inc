@@ -22,6 +22,8 @@ include_once('webform_integration.inc');
  * 
  */
 function ica_event_process_prefill(&$form, $form_state) {
+  global $user;
+
   $prefill_cross_page = array(
     ICA_GENERAL_COUNTRY                                 => ICA_ORGANISATION_PREFIX . 'country',
     ICA_ORGANISATION_PREFIX . 'street_address'          => ICA_BILLING_PREFIX . 'street_address',
@@ -31,6 +33,7 @@ function ica_event_process_prefill(&$form, $form_state) {
     ICA_ORGANISATION_PREFIX . 'city'                    => ICA_BILLING_PREFIX . 'city',
     ICA_ORGANISATION_PREFIX . 'country'                 => ICA_BILLING_PREFIX . 'country',
     ICA_ORGANISATION_PREFIX . 'organization_name'       => ICA_REGISTRANT_ORG_BADGE,
+    'CONSTANT:' . $user->mail                           => ICA_REGISTRANT_PREFIX . 'email',
   );
 
   $prefill_same_page = array(
@@ -43,8 +46,16 @@ function ica_event_process_prefill(&$form, $form_state) {
   // run cross-page prefill on the form data
   $current_values = ica_event_get_form_values($form, $form_state);
   foreach ($prefill_cross_page as $source_field_name => $target_field_name) {
-    if (!empty($current_values[$source_field_name])) {
-      _ica_event_do_prefill($form, $current_values[$source_field_name], $target_field_name);
+    if (substr($source_field_name, 0, 9) == 'CONSTANT:') {
+      $current_value = substr($source_field_name, 9);
+    } elseif (!empty($current_values[$source_field_name])) {
+      $current_value = $current_values[$source_field_name];
+    } else {
+      $current_value = NULL;
+    }
+    
+    if (!empty($current_value)) {
+      _ica_event_do_prefill($form, $current_value, $target_field_name);
     }
   }
 
