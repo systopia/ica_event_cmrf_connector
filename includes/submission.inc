@@ -32,6 +32,9 @@ function ica_event_process_submission($node, $submission_data) {
     return;
   }
 
+  global $user;
+  global $language;
+
   // calculate the registration info
   $submitted_values = array();
   $registrations = ica_event_calculate_registrations_with_submission($node, $submission_data, $submitted_values);
@@ -40,6 +43,7 @@ function ica_event_process_submission($node, $submission_data) {
   $submission = array();
   $submission['submission_date']         = date('YmdHis');
   $submission['registration_id']         = ICA_EVENT_SUBMISSION_PREFIX . "-{$submission_data->nid}-{$submission_data->sid}";
+  $submission['registration_language']   = $language->name;
   $submission['event_id']                = ICA_CIVICRM_EVENT_ID;
   $submission['payment_mode']            = $submitted_values[ICA_PAYMENT_MODE];
   $submission['additional_participants'] = array();
@@ -100,7 +104,6 @@ function ica_event_process_submission($node, $submission_data) {
     // now create the order
     if (!empty($registration_products)) {
       // watchdog(WATCHDOG_DEBUG, "Creating order {$submission['registration_id']}...");
-      global $user;
       
       // create a new order
       $order = commerce_order_new($user->uid, 'checkout_checkout');
