@@ -82,8 +82,8 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
 
 
   // THEN: create main contact
-  $main_contact_youth = ica_event_get_value(ICA_EVENT_BIRTH_DATE, $current_values);
-  if (ica_event_is_youth($main_contact_youth)) {
+  $main_contact_youth_discount = ica_event_get_value(ICA_EVENT_YOUTH_DISCOUNT, $current_values);
+  if (!empty($main_contact_youth_discount)) {
     // YOUNG PARTICIPANT
     $class = 'youth';
 
@@ -129,7 +129,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   if ($matrix_data) {
     foreach ($matrix_data as $row_nr => $values) {
       $registrant_key = "additional_{$row_nr}";
-      if (!empty($values[ICA_EVENT_YOUTH])) {
+      if (!empty($values[ICA_EVENT_YOUTH_DISCOUNT])) {
         // YOUNG PARTICIPANT
         $class = 'youth';
 
@@ -256,14 +256,14 @@ function ica_event_get_value($key, &$variables) {
 /**
  * check whether the given birth date will grant 'youth' status
  */
-function ica_event_is_youth($date) {
-  if (is_array($date)) {
-    if (empty($date['year']) || empty($date['month']) || empty($date['day'])) {
-      return FALSE;
-    } else {
-      $date = sprintf("%04d-%02d-%02d", $date['year'], $date['month'], $date['day']);
-    }
-  }
+// function ica_event_is_youth($date) {
+//   if (is_array($date)) {
+//     if (empty($date['year']) || empty($date['month']) || empty($date['day'])) {
+//       return FALSE;
+//     } else {
+//       $date = sprintf("%04d-%02d-%02d", $date['year'], $date['month'], $date['day']);
+//     }
+//   }
 
-  return $date >= ICA_EVENT_YOUTH_MAX_BIRTHDAY;
-}
+//   return $date >= ICA_EVENT_YOUTH_MAX_BIRTHDAY;
+// }

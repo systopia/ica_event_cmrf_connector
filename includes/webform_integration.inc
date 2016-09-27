@@ -19,7 +19,6 @@
 // constants: general
 define('ICA_EVENT_SUBMISSION_PREFIX',  'GA2017');
 define('ICA_EVENT_FORM_IDS',           'webform_client_form_1,webform_client_form_3,webform_client_form_5');
-define('ICA_EVENT_YOUTH_MAX_BIRTHDAY', '1987-09-30');
 define('ICA_REGISTRANT_COUNTRY_LOCAL', 'MY');
 define('ICA_DEFAULT_CURRENCY',         'EUR');
 define('ICA_CIVICRM_EVENT_ID',         '1');
@@ -39,7 +38,7 @@ define('ICA_EVENT_PARTNER',            'partner');
 define('ICA_REGISTRANT_ATTENDING',     'registrant_attending');
 define('ICA_REGISTRANT_COUNTRY',       'general_country');
 define('ICA_EVENT_BIRTH_DATE',         'birth_date');
-define('ICA_EVENT_YOUTH',              'youth');
+define('ICA_EVENT_YOUTH_DISCOUNT',     'youth_discount');
 define('ICA_MEMBER_ORGANISATION',      'registrant_represents');
 
 // matrix
@@ -72,7 +71,7 @@ $ica_event_matrix_fields_group_registration = array(
     7  => 'registrant_languages',
     8  => 'registrant_position',
     9  => 'registrant_organisation_badge',
-    10 => 'birth_date',
+    10 => 'youth_discount',
     11 => 'partner',
     12 => 'partner_prefix',
     13 => 'partner_formal_title',
@@ -94,7 +93,6 @@ $ica_event_registration_properties = array(
         'badge'                  => 'custom_badge',
         'organisation_badge'     => 'custom_organisation_badge',
         'comments'               => 'participant_note',
-        'youth'                  => 'birth_date',
         'email'                  => 'email',
         'phone'                  => 'phone',
         'street_address'         => 'street_address',
