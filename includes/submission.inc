@@ -125,7 +125,8 @@ function ica_event_process_submission($node, $submission_data) {
 
       if ($submitted_values[ICA_PAYMENT_MODE] == ICA_PAYMENT_MODE_ONLINE) {
         // manually trigger webform rule, since the redirect prevents that
-        rules_invoke_event("webform_rules_submit", $user, $node, $submission_data, $node->webform['nid']);
+        $webform_id = isset($node->webform['nid']) ? $node->webform['nid'] : $node->nid;
+        rules_invoke_event("webform_rules_submit", $user, $node, $submission_data, $webform_id);
 
         // redirect to payment page if online payment selected
         drupal_goto('checkout/' . $order->order_id);
