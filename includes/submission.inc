@@ -123,9 +123,12 @@ function ica_event_process_submission($node, $submission_data) {
       // commerce_cart_order_session_save($order->order_id);
       // watchdog(WATCHDOG_INFO, 'Order created: checkout/' . $order->order_id);
 
-      if ($submitted_values[ICA_PAYMENT_MODE] == ICA_PAYMENT_MODE_ONLINE) {  
+      if ($submitted_values[ICA_PAYMENT_MODE] == ICA_PAYMENT_MODE_ONLINE) {
         // redirect to payment page if online payment selected
         drupal_goto('checkout/' . $order->order_id);
+
+        // manually trigger webform rule, since the redirect prevents that
+        rules_invoke_event("webform_rules_submit", $user, $node, $submission_data, $node->webform['nid']);
       }
     }
   } else {
