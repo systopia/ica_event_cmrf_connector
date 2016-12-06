@@ -51,6 +51,7 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
 
     // calculate amount
     if (isset($form['submitted'][ICA_EVENT_AMOUNT])) {
+      drupal_add_js(drupal_get_path('module', 'ica_event_cmrf_connector') . "/js/hide_empty_counters.js");
       include_once('includes/calculate_registration_fee.inc');
       $registration = ica_event_calculate_registration_fee($form, $form_state);
       
