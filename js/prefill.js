@@ -85,7 +85,7 @@
         // console.log("getting " + selector);
         return $(selector).val();
       } else {
-        return null;
+        return '';
       }
     }
 
