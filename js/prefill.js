@@ -71,10 +71,10 @@
       'registrant_first_name': 4,
       'registrant_last_name': 3,
       'registrant_badge_name': 5,
-      'partner_formal_title': 13,
-      'partner_first_name': 14,
-      'partner_last_name': 15,
-      'partner_badge_name': 16,
+      // 'partner_formal_title': 13,
+      'partner_first_name': 13,
+      'partner_last_name': 14,
+      'partner_badge_name': 15,
     };
 
 

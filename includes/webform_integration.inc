@@ -76,7 +76,7 @@ $ica_event_matrix_fields_group_registration = array(
     12 => 'partner_prefix',
     13 => 'partner_first_name',
     14 => 'partner_last_name',
-    15 => 'partner_badge',
+    15 => 'partner_badge_name',
     16 => 'registrant_comments',
   );
 
