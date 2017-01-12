@@ -16,6 +16,7 @@
 (function($) {
   $(document).ready(function(){
 
+    // define helper functions
     function setRegistrantBatchName() {
       setBatchName("registrant");
     }
@@ -39,6 +40,14 @@
       $("input[name='submitted[registrant_organisation_badge]']").val(badge_name);
     }
 
+
+    // prefill email
+    var registrant_email = $("input[name='submitted[registrant_email]']");
+    if (registrant_email.val() == '') {
+      registrant_email.val(Drupal.settings.ica_event_cmrf_connector.variables.email);
+    }
+
+    // add triggers
     $("input[name='submitted[registrant_formal_title]']").change(setRegistrantBatchName);
     $("input[name='submitted[registrant_first_name]']").change(setRegistrantBatchName);
     $("input[name='submitted[registrant_last_name]']").change(setRegistrantBatchName);
