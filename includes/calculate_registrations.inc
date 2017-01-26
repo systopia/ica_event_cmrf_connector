@@ -106,18 +106,21 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   }
   $main_registration = $classes[$class]; 
   ica_event_copy_fields($main_registration, $current_values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
+  $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
 
   // add the partner
   $main_contact_has_partner = ica_event_get_value(ICA_EVENT_PARTNER, $current_values);
-  if ($main_contact_has_partner) {
+  if ($main_contact_has_partner && $main_contact_attending) {
     $partner_registration = $classes['partner'];
     $partner_registration['participant_role'] = array('Partner');
     $partner_registration['partner_of'] = 'main';
     ica_event_copy_fields($partner_registration, $current_values, $ica_event_registration_properties, ICA_PARTNER_PREFIX);
-    $registrations['main_partner'] = $partner_registration;
+    if (ica_event_contact_valid($partner_registration)) {
+      // partner is valid -> add
+      $registrations['main_partner'] = $partner_registration;
+    }
   }
 
-  $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
   if ($main_contact_attending) {
     // main contact attending
     $main_registration['participant_role'] = array('Main Contact', 'Participant');
@@ -154,19 +157,26 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
       $registration = $classes[$class];
       ica_event_copy_fields($registration, $values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
       $registration['participant_role'] = array('Group Participant', 'Participant');
-      $registrations[$registrant_key] = $registration;
-
       if (!empty($main_registration['custom_represented_organisation'])) {
         $registration['custom_represented_organisation'] = $main_registration['custom_represented_organisation'];
       }
 
-      if (!empty($values[ICA_EVENT_PARTNER])) {
-        $partner_key = "additional_{$row_nr}_partner";
-        $partner_registration = $classes['partner'];
-        $partner_registration['partner_of'] = $registrant_key;
-        ica_event_copy_fields($partner_registration, $values, $ica_event_registration_properties, ICA_PARTNER_PREFIX);
-        $registrations[$partner_key] = $partner_registration;
+      if (ica_event_contact_valid($registration)) {
+        // main contact is valid -> add
+        $registrations[$registrant_key] = $registration;
+
+        if (!empty($values[ICA_EVENT_PARTNER])) {
+          $partner_key = "additional_{$row_nr}_partner";
+          $partner_registration = $classes['partner'];
+          $partner_registration['partner_of'] = $registrant_key;
+          ica_event_copy_fields($partner_registration, $values, $ica_event_registration_properties, ICA_PARTNER_PREFIX);
+          if (ica_event_contact_valid($partner_registration)) {
+            // partner exists and is valid -> add
+            $registrations[$partner_key] = $partner_registration;
+          }
+        }
       }
+
     }
   }
 
@@ -174,6 +184,12 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   return $registrations;
 }
 
+/**
+ * make sure a contact is valid (i.e. has first/last name)
+ */
+function ica_event_contact_valid(&$contact) {
+  return !empty($contact['first_name']) && !empty($contact['last_name']);
+}
 
 /**
  * copy a set of fields into the registration data (first argument)
