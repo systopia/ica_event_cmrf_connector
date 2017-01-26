@@ -72,6 +72,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   $registrations      = array();
   $organisation_id    = ica_event_get_value(ICA_MEMBER_ORGANISATION, $current_values);
   $registrant_country = ica_event_get_value(ICA_REGISTRANT_COUNTRY, $current_values);
+  $registration_type  = ica_event_get_value(ICA_REGISTRATION_TYPE, $current_values);
   
 
   // FIRST: create organisation
@@ -133,8 +134,8 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
 
 
 
-  // THEN: process all people in the matrix;  
-  if ($matrix_data) {
+  // THEN: process all people in the matrix;
+  if ($matrix_data && ($registration_type == ICA_REGISTRATION_TYPE_GROUP)) {
     foreach ($matrix_data as $row_nr => $values) {
       $registrant_key = "additional_{$row_nr}";
       if (!empty($values[ICA_EVENT_YOUTH_DISCOUNT])) {

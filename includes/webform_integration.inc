@@ -24,8 +24,11 @@ define('ICA_DEFAULT_CURRENCY',         'EUR');
 define('ICA_CIVICRM_EVENT_ID',         '1');
 
 
-
 // active fields
+define('ICA_REGISTRATION_TYPE',        'registration_type');
+define('ICA_REGISTRATION_TYPE_INDVDL', '1');
+define('ICA_REGISTRATION_TYPE_GROUP',  '2');
+
 define('ICA_EVENT_AMOUNT',             'amount');
 define('ICA_EVENT_DISCOUNTCODE',       'discount_code');
 
