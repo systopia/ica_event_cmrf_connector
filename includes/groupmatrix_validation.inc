@@ -23,6 +23,9 @@ include_once('webform_integration.inc');
  * Validate the group matrix entries
  */
 function ica_event_groupmatrix_validation($items, $components, $rule) {
+  global $ica_event_matrix_fields_group_registration;
+  $field_indexes = array_flip($ica_event_matrix_fields_group_registration);
+
   $errors = array();
   foreach ($items as $key => $rows) {
     foreach ($rows as $row_nr => $row_data_raw) {
@@ -32,6 +35,8 @@ function ica_event_groupmatrix_validation($items, $components, $rule) {
       if (!empty($row_data['partner'])) {
         // there is a partner, it should have a name
         if (empty($row_data['partner_first_name']) || empty($row_data['partner_last_name'])) {
+          $inner_key = "{$row_nr}-" . $field_indexes['partner_first_name'];
+          $errors[$inner_key] = t('A partner also needs a first and a last name');
           $errors[$key] = t('A partner also needs a first and a last name');
           break;
         }
