@@ -34,15 +34,15 @@ function ica_event_groupmatrix_validation($items, $components, $rule) {
       $row_data = ica_event_resolve_matrixrow_idexes($row_data_raw);
       if (!empty($row_data['partner'])) {
         // there is a partner, it should have a name
-        if (empty($row_data['partner_first_name']) {
+        if (empty($row_data['partner_first_name'])) {
           $errors[] = t('Partner in row %row_nr needs a first name', array('%row_nr' => $row_nr));
         }
 
-        if (empty($row_data['partner_last_name']) {
+        if (empty($row_data['partner_last_name'])) {
           $errors[] = t('Partner in row %row_nr needs a last name', array('%row_nr' => $row_nr));
         }
 
-        if (empty($row_data['partner_prefix']) {
+        if (empty($row_data['partner_prefix'])) {
           $errors[] = t('Partner in row %row_nr needs a prefix', array('%row_nr' => $row_nr));
         }
       }
