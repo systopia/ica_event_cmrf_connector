@@ -27,9 +27,6 @@
         .filter(function() {return this.name.endsWith("][" + partner + "]");})
         .each(function() {
           var row = parseInt(this.name.substr(36));
-          console.log(row);
-          // var partner = $("select[name='submitted[group_registration_table][" + row + "][" + partner + "]']");
-          console.log($(this).val());
 
           if (parseInt($(this).val())) {
             // partner is ACTIVE: show fields
@@ -40,10 +37,15 @@
 
             // validate fields
             var prefix_val = $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").val();
-            console.log(prefix_val);
-            var first_name_val = $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").val();
-            console.log(first_name_val);
+            if (prefix_val.length) {
+              jQuery("input").addClass("ica-warning");
+            } else {
+              jQuery("input").removeClass("ica-warning");
+            }
             
+            var first_name_val = $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").val();
+
+
           } else {
             // partner is INACTIVE: hide fields
             $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().parent().hide(200);
