@@ -33,17 +33,17 @@
           
           if (parseInt(partner.val())) {
             // partner is ACTIVE: show fields
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").hide();
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").hide();
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").hide();
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").hide();
+            $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().show();
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").parent().show();
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").parent().show();
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().show();
 
           } else {
             // partner is INACTIVE: hide fields
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").hide();
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").hide();
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").hide();
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").hide();
+            $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().hide();
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").parent().hide();
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").parent().hide();
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().hide();
           }
         });
     }
