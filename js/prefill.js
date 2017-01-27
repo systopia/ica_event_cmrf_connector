@@ -100,7 +100,7 @@
       var index = matrix_index[field_key];
       if (index) {
         var selector = "input[name='submitted[group_registration_table][" + row + "][" + index + "]']";
-        console.log("setting " + selector + " to " + value);
+        // console.log("setting " + selector + " to " + value);
         $(selector).val(value);
       }
     }

@@ -27,6 +27,7 @@
         .filter(function() {return this.name.endsWith("][" + partner + "]");})
         .each(function() {
           var row = parseInt(this.name.substr(36));
+          console.log("ROW " + row);
 
           if (parseInt($(this).val())) {
             // partner is ACTIVE: show fields
