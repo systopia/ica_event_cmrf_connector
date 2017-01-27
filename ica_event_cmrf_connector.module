@@ -73,6 +73,10 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
       }
     }
 
+    if (isset($form['submitted'][ICA_EVENT_MATRIX])) {
+      drupal_add_js(drupal_get_path('module', 'ica_event_cmrf_connector') . "/js/groupmatrix_validation.js");
+    }
+
     // insert lookup logic for discount code
     if (isset($form['submitted'][ICA_EVENT_DISCOUNTCODE])) {
       include_once('includes/discount_code.inc');
