@@ -26,7 +26,8 @@
       $("select[name^='submitted[group_registration_table][']")
         .filter(function() {return this.name.endsWith("][" + partner + "]");})
         .each(function() {
-          var row = parseInt(this.name.substr(37));
+          console.log(this.name.substr(36));
+          var row = parseInt(this.name.substr(36));
           console.log(row);
           var partner = $("select[name='submitted[group_registration_table][" + row + "][" + partner + "]']")
           
