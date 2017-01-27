@@ -36,14 +36,33 @@
             $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().parent().show(200);
 
             // validate fields
-            var prefix_val = $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").val();
-            if (prefix_val.length) {
-              jQuery("input").addClass("ica-warning");
+            var prefix_field = $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']");
+            if (parseInt(prefix_field.val())) {
+              prefix_field.addClass("ica-warning");
             } else {
-              jQuery("input").removeClass("ica-warning");
+              prefix_field.removeClass("ica-warning");
+            }
+
+            var first_name_field = $("select[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']");
+            if (parseInt(first_name_field.length)) {
+              first_name_field.addClass("ica-warning");
+            } else {
+              first_name_field.removeClass("ica-warning");
             }
             
-            var first_name_val = $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").val();
+            var last_name_field = $("select[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']");
+            if (parseInt(last_name_field.length)) {
+              last_name_field.addClass("ica-warning");
+            } else {
+              last_name_field.removeClass("ica-warning");
+            }
+
+            var badge_name_field = $("select[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']");
+            if (parseInt(badge_name_field.length)) {
+              badge_name_field.addClass("ica-warning");
+            } else {
+              badge_name_field.removeClass("ica-warning");
+            }
 
 
           } else {
