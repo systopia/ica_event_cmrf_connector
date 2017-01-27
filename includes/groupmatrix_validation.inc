@@ -24,14 +24,14 @@ include_once('webform_integration.inc');
  */
 function ica_event_groupmatrix_validation($items, $components, $rule) {
   $errors = array();
-  error_log(json_encode($items));
   foreach ($items as $key => $rows) {
     foreach ($rows as $row_nr => $row_data_raw) {
+      if (!is_numeric($row_nr)) continue;
       $row_data = ica_event_resolve_matrixrow_idexes($row_data_raw);
       error_log(json_encode($row_data));
       if (!empty($row_data['partner'])) {
         // there is a partner, it should have a name
-        if (empty($row_data['partner']) || empty($row_data['partner'])) {
+        if (empty($row_data['partner_first_name']) || empty($row_data['partner_last_name'])) {
           $errors[$key] = t('A partner also needs a first and a last name');
           break;
         }
@@ -43,6 +43,7 @@ function ica_event_groupmatrix_validation($items, $components, $rule) {
   // error_log(json_encode($components));
   // error_log(json_encode($rule));
 
+  error_log(json_encode($errors));
   return $errors;
 }
 
