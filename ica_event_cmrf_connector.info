@@ -2,6 +2,7 @@ name = ICA Event CMRF Connector
 description = Will connect to CMRF core for submission
 core = 7.x
 dependencies[] = webform
+dependencies[] = webform_validation
 dependencies[] = cmrf_core
 dependencies[] = commerce (1.x)
 dependencies[] = commerce_product

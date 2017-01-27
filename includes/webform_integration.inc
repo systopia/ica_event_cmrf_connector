@@ -135,6 +135,22 @@ function ica_event_get_matrix_values($raw_matrix_data, $matrix_fields) {
   return $matrix_values;
 }
 
+/**
+ * resolve a matrix row's indices to field_names using $ica_event_matrix_fields constant
+ */
+function ica_event_resolve_matrixrow_idexes($row_data) {
+  global $ica_event_matrix_fields_group_registration;
+  $resolved_data = array();
+  foreach ($ica_event_matrix_fields_group_registration as $key => $field_name) {
+    if (array_key_exists($key, $row_data)) {
+      $resolved_data[$field_name] = $row_data[$key];
+    } else {
+      $resolved_data[$field_name] = NULL;
+    }
+  }
+  return $resolved_data;
+}
+
 
 /**
  * get all known values of a multipage webform

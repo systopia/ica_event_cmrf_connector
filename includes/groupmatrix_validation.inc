@@ -23,9 +23,22 @@ include_once('webform_integration.inc');
  * Validate the group matrix entries
  */
 function ica_event_groupmatrix_validation($items, $components, $rule) {
-  error_log(json_encode($items));
-  error_log(json_encode($components));
-  error_log(json_encode($rule));
+  $errors = array();
+  foreach ($items as $key => $row_data_raw) {
+    $row_data = ica_event_resolve_matrixrow_idexes($row_data_raw);
+    if (!empty($row_data['partner'])) {
+      // there is a partner, it should have a name
+      if (empty($row_data['partner']) || empty($row_data['partner'])) {
+        $errors[$key] = t('A partner also needs a first and a last name');
+      }
+    }
+  }
+
+  // error_log(json_encode($items));
+  // error_log(json_encode($components));
+  // error_log(json_encode($rule));
+
+  return $errors;
 }
 
 
