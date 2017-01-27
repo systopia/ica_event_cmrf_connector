@@ -33,28 +33,32 @@
 
           if (parseInt($(this).val())) {
             // partner is ACTIVE: show fields
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().parent().show();
-            $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").parent().parent().show();
-            $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").parent().parent().show();
-            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().parent().show();
+            $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().parent().show(200);
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").parent().parent().show(200);
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").parent().parent().show(200);
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().parent().show(200);
 
+            // validate fields
+            var prefix_val = $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").val();
+            console.log(prefix_val);
+            var first_name_val = $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").val();
+            console.log(first_name_val);
+            
           } else {
             // partner is INACTIVE: hide fields
-            $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().parent().hide();
-            $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").parent().parent().hide();
-            $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").parent().parent().hide();
-            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().parent().hide();
+            $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().parent().hide(200);
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").parent().parent().hide(200);
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").parent().parent().hide(200);
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().parent().hide(200);
           }
         });
     }
 
-    // // CATCH select[name='submitted[group_registration_table][*][<partner>]']
-    //   $("select[name^='submitted[group_registration_table][']")
-    //     .filter(function() {return this.name.endsWith("][" + partner + "]");})
-    //     .change(validateForm);
-
     // catch ALL change events on table for processing
     $("body").change(validateForm);
+
+    // call it once
+    validateForm();
   });
 })(jQuery);
 
