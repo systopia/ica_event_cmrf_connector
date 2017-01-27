@@ -43,22 +43,22 @@
               prefix_field.removeClass("ica-warning");
             }
 
-            var first_name_field = $("select[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']");
-            if (parseInt(first_name_field.length)) {
+            var first_name_field = $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']");
+            if (first_name_field.replace(/ +/g, "").length) {
               first_name_field.addClass("ica-warning");
             } else {
               first_name_field.removeClass("ica-warning");
             }
             
-            var last_name_field = $("select[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']");
-            if (parseInt(last_name_field.length)) {
+            var last_name_field = $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']");
+            if (last_name_field.replace(/ +/g, "").length) {
               last_name_field.addClass("ica-warning");
             } else {
               last_name_field.removeClass("ica-warning");
             }
 
-            var badge_name_field = $("select[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']");
-            if (parseInt(badge_name_field.length)) {
+            var badge_name_field = $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']");
+            if (badge_name_field.replace(/ +/g, "").length) {
               badge_name_field.addClass("ica-warning");
             } else {
               badge_name_field.removeClass("ica-warning");
