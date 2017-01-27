@@ -26,56 +26,31 @@ function ica_event_groupmatrix_validation($items, $components, $rule) {
   global $ica_event_matrix_fields_group_registration;
   $field_indexes = array_flip($ica_event_matrix_fields_group_registration);
 
-  $errors = array();
+  $all_errors = array();
   foreach ($items as $key => $rows) {
+    $errors = array();
     foreach ($rows as $row_nr => $row_data_raw) {
       if (!is_numeric($row_nr)) continue;
       $row_data = ica_event_resolve_matrixrow_idexes($row_data_raw);
-      error_log(json_encode($row_data));
       if (!empty($row_data['partner'])) {
         // there is a partner, it should have a name
-        if (empty($row_data['partner_first_name']) || empty($row_data['partner_last_name'])) {
-          // $inner_key = "{$row_nr}-" . $field_indexes['partner_first_name'];
-          // $errors[$inner_key] = t('A partner also needs a first and a last name');
+        if (empty($row_data['partner_first_name']) {
+          $errors[] = t('Partner in row %row_nr needs a first name', array('%row_nr' => $row_nr));
+        }
 
-          // $inner_key2 = "[{$row_nr}]-[" . $field_indexes['partner_first_name'] . ']';
-          // $errors[$inner_key2] = t('A partner also needs a first and a last name');
+        if (empty($row_data['partner_last_name']) {
+          $errors[] = t('Partner in row %row_nr needs a last name', array('%row_nr' => $row_nr));
+        }
 
-          // $errors[$key . '-' . $inner_key] = t('A partner also needs a first and a last name');
-          // $errors[$key . $inner_key2] = t('A partner also needs a first and a last name');
-
-          $errors[$key][$row_nr][$field_indexes['partner_first_name']] = "PARTNER ERROR";
-          break;
+        if (empty($row_data['partner_prefix']) {
+          $errors[] = t('Partner in row %row_nr needs a prefix', array('%row_nr' => $row_nr));
         }
       }
     }
+    if (!empty($errors)) {
+      $all_errors[$key] = '<ul><li>' . implode('</li><li>', $errors) . '</li></ul>';
+    }
   }
 
-  // error_log(json_encode($items));
-  // error_log(json_encode($components));
-  // error_log(json_encode($rule));
-
-  error_log(json_encode($errors));
-  return $errors;
+  return $all_errors;
 }
-
-
-// /**
-//  * Additional validation for the group registration matrix
-//  */
-// function ica_event_groupmatrix_validation($validator_name, $items, $components, $rule) {
-//   // if ($items) {
-//   //   switch ($validator_name) {
-//   //     case 'validate_id':
-//   //       $valid_ids = array(1, 2, 3); // get this from database source instead
-//   //       $errors = array();
-//   //       foreach ($items as $key => $val) {
-//   //         if ($val && (!in_array($val, $valid_ids))) {
-//   //           $errors[$key] = t('%item is not a valid ID', array('%item' => $components[$key]['name']));
-//   //         }
-//   //       }
-//   //       return $errors;
-//   //       break;
-//   //   }
-//   // }
-// }
