@@ -28,9 +28,9 @@
         .each(function() {
           var row = parseInt(this.name.substr(36));
           console.log(row);
-          var partner = $("select[name='submitted[group_registration_table][" + row + "][" + partner + "]']")
+          var partner = $("select[name='submitted[group_registration_table][" + row + "][" + partner + "]']");
           console.log(partner.val());
-          
+
           if (parseInt(partner.val())) {
             // partner is ACTIVE: show fields
             $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().parent().show();
