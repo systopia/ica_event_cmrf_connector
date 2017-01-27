@@ -44,21 +44,21 @@
             }
 
             var first_name_field = $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']");
-            if (first_name_field.replace(/ +/g, "").length) {
+            if (first_name_field.val().replace(/ +/g, "").length) {
               first_name_field.removeClass("ica-warning");
             } else {
               first_name_field.addClass("ica-warning");
             }
             
             var last_name_field = $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']");
-            if (last_name_field.replace(/ +/g, "").length) {
+            if (last_name_field.val().replace(/ +/g, "").length) {
               last_name_field.removeClass("ica-warning");
             } else {
               last_name_field.addClass("ica-warning");
             }
 
             var badge_name_field = $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']");
-            if (badge_name_field.replace(/ +/g, "").length) {
+            if (badge_name_field.val().replace(/ +/g, "").length) {
               badge_name_field.removeClass("ica-warning");
             } else {
               badge_name_field.addClass("ica-warning");
