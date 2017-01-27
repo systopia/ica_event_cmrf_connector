@@ -109,6 +109,31 @@ function ica_event_cmrf_connector_webform_submission_update($node, $submission) 
 }
 
 
+function ica_event_cmrf_connector_webform_validation_validate($validator_name, $items, $components, $rule) {
+  error_log(json_encode($validator_name));
+  if ($validator_name == 'group_registration') {
+    // include_once('includes/groupmatrix_validation.inc');
+    // return ica_event_groupmatrix_validation($element, $form_state);
+    error_log(json_encode($items));
+    error_log(json_encode($components));
+    error_log(json_encode($rule));    
+  }
+}
+
+/**
+ * add matrix validator
+ */
+function ica_event_cmrf_connector_webform_validation_validators() {
+  error_log("VALIDATORS");
+  return array(
+    'group_registration' => array(
+      'name' => "Group Registration Validation",
+      'description' => "Will make sure that the internal conditions in the matrix will be upheld.",
+      'component_types' => array('matrix'),
+    )
+  );
+}
+
 /**
  * Define custom dropdown lists
  */
