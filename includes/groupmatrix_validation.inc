@@ -35,14 +35,16 @@ function ica_event_groupmatrix_validation($items, $components, $rule) {
       if (!empty($row_data['partner'])) {
         // there is a partner, it should have a name
         if (empty($row_data['partner_first_name']) || empty($row_data['partner_last_name'])) {
-          $inner_key = "{$row_nr}-" . $field_indexes['partner_first_name'];
-          $errors[$inner_key] = t('A partner also needs a first and a last name');
+          // $inner_key = "{$row_nr}-" . $field_indexes['partner_first_name'];
+          // $errors[$inner_key] = t('A partner also needs a first and a last name');
 
-          $inner_key2 = "[{$row_nr}]-[" . $field_indexes['partner_first_name'] . ']';
-          $errors[$inner_key2] = t('A partner also needs a first and a last name');
+          // $inner_key2 = "[{$row_nr}]-[" . $field_indexes['partner_first_name'] . ']';
+          // $errors[$inner_key2] = t('A partner also needs a first and a last name');
 
-          $errors[$key . '-' . $inner_key] = t('A partner also needs a first and a last name');
-          $errors[$key . $inner_key2] = t('A partner also needs a first and a last name');
+          // $errors[$key . '-' . $inner_key] = t('A partner also needs a first and a last name');
+          // $errors[$key . $inner_key2] = t('A partner also needs a first and a last name');
+
+          $errors[$key][$row_nr][$field_indexes['partner_first_name']] = "PARTNER ERROR";
           break;
         }
       }
