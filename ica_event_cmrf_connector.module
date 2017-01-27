@@ -64,7 +64,7 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
         }
 
         if (isset($form['submitted']["registration_{$key}_subtotal"])) {
-          $form['submitted']["registration_{$key}_subtotal"]['#value'] = ($registration[$key] * $registration['fees'][$key]);
+          $form['submitted']["registration_{$key}_subtotal"]['#value'] = "&euro; " . ($registration[$key] * $registration['fees'][$key]);
         }
       }
     }
