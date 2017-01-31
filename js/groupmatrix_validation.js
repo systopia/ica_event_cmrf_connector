@@ -78,8 +78,7 @@
 
     // catch ALL change events on table for processing
     $("body").change(validateForm);
-
-    // call it once
+    $(document).ready(validateForm);
     validateForm();
   });
 })(jQuery);
