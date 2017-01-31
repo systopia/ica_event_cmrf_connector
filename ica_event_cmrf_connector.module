@@ -52,10 +52,11 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
     // calculate amount
     if (isset($form['submitted'][ICA_EVENT_AMOUNT])) {
       drupal_add_js(drupal_get_path('module', 'ica_event_cmrf_connector') . "/js/hide_empty_counters.js");
+      drupal_add_css(drupal_get_path('module', 'ica_event_cmrf_connector') . "/css/overview.css");
       include_once('includes/calculate_registration_fee.inc');
       $registration = ica_event_calculate_registration_fee($form, $form_state);
       
-      $form['submitted'][ICA_EVENT_AMOUNT]['#value'] = '€ ' . $registration['amount'];
+      // $form['submitted'][ICA_EVENT_AMOUNT]['#value'] = '€ ' . $registration['amount'];
 
       // set the fields
       foreach ($registration['fees'] as $key => $fee) {
@@ -65,9 +66,7 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
 
         if (isset($form['submitted']["registration_{$key}_subtotal"])) {
           $amount = ($registration[$key] * $registration['fees'][$key]);
-          if ($amount != 0) {
-            $amount = '€ ' . $amount;
-          }
+          // if ($amount != 0) { $amount = '€ ' . $amount; }
           $form['submitted']["registration_{$key}_subtotal"]['#value'] = $amount;
         }
       }
