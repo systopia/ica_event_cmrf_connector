@@ -25,16 +25,16 @@ function ica_event_process_prefill(&$form, $form_state) {
   global $user;
 
   $prefill_cross_page = array(
-    ICA_MEMBER_ORGANISATION                             => ICA_ORGANISATION_PREFIX . 'organization_name',
-    ICA_MEMBER_ORGANISATION                             => ICA_ORGANISATION_PREFIX . 'badge',
-    ICA_GENERAL_COUNTRY                                 => ICA_ORGANISATION_PREFIX . 'country',
-    ICA_ORGANISATION_PREFIX . 'street_address'          => ICA_BILLING_PREFIX . 'street_address',
-    ICA_ORGANISATION_PREFIX . 'supplemental_address_1'  => ICA_BILLING_PREFIX . 'supplemental_address_1',
-    ICA_ORGANISATION_PREFIX . 'supplemental_address_2'  => ICA_BILLING_PREFIX . 'supplemental_address_2',
-    ICA_ORGANISATION_PREFIX . 'postal_code'             => ICA_BILLING_PREFIX . 'postal_code',
-    ICA_ORGANISATION_PREFIX . 'city'                    => ICA_BILLING_PREFIX . 'city',
-    ICA_ORGANISATION_PREFIX . 'country'                 => ICA_BILLING_PREFIX . 'country',
-    ICA_ORGANISATION_PREFIX . 'organization_name'       => ICA_REGISTRANT_ORG_BADGE,
+    array(ICA_MEMBER_ORGANISATION                             => ICA_ORGANISATION_PREFIX . 'organization_name'),
+    array(ICA_MEMBER_ORGANISATION                             => ICA_ORGANISATION_PREFIX . 'badge'),
+    array(ICA_GENERAL_COUNTRY                                 => ICA_ORGANISATION_PREFIX . 'country'),
+    array(ICA_ORGANISATION_PREFIX . 'street_address'          => ICA_BILLING_PREFIX . 'street_address'),
+    array(ICA_ORGANISATION_PREFIX . 'supplemental_address_1'  => ICA_BILLING_PREFIX . 'supplemental_address_1'),
+    array(ICA_ORGANISATION_PREFIX . 'supplemental_address_2'  => ICA_BILLING_PREFIX . 'supplemental_address_2'),
+    array(ICA_ORGANISATION_PREFIX . 'postal_code'             => ICA_BILLING_PREFIX . 'postal_code'),
+    array(ICA_ORGANISATION_PREFIX . 'city'                    => ICA_BILLING_PREFIX . 'city'),
+    array(ICA_ORGANISATION_PREFIX . 'country'                 => ICA_BILLING_PREFIX . 'country'),
+    array(ICA_ORGANISATION_PREFIX . 'organization_name'       => ICA_REGISTRANT_ORG_BADGE),
   );
 
   $prefill_same_page = array(
@@ -51,7 +51,10 @@ function ica_event_process_prefill(&$form, $form_state) {
   // error_log("values: " . $form_state['values']['submitted'][76]);
   // error_log("input: " . $form_state['input']['submitted']['billing_street_address']);
   // error_log("current: " . $current_values['billing_street_address']);
-  foreach ($prefill_cross_page as $source_field_name => $target_field_name) {
+  foreach ($prefill_cross_page as $tuple) {
+    $source_field_name = $tuple[0];
+    $target_field_name = $tuple[1];
+
     if (!empty($current_values[$target_field_name])) {
       continue; // no prefill for existing values
     }
