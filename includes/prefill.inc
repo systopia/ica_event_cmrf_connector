@@ -25,6 +25,8 @@ function ica_event_process_prefill(&$form, $form_state) {
   global $user;
 
   $prefill_cross_page = array(
+    ICA_MEMBER_ORGANISATION                             => ICA_ORGANISATION_PREFIX . 'organization_name',
+    ICA_MEMBER_ORGANISATION                             => ICA_ORGANISATION_PREFIX . 'badge',
     ICA_GENERAL_COUNTRY                                 => ICA_ORGANISATION_PREFIX . 'country',
     ICA_ORGANISATION_PREFIX . 'street_address'          => ICA_BILLING_PREFIX . 'street_address',
     ICA_ORGANISATION_PREFIX . 'supplemental_address_1'  => ICA_BILLING_PREFIX . 'supplemental_address_1',
@@ -59,6 +61,12 @@ function ica_event_process_prefill(&$form, $form_state) {
       $current_value = $current_values[$source_field_name];
     } else {
       $current_value = NULL;
+    }
+
+    // resolve organisation ID
+    if ($current_value && $source_field_name == ICA_MEMBER_ORGANISATION) {
+      include_once('optionlists.inc');
+      $current_value = ica_member_get_organisation_short($current_value);
     }
     
     if (!empty($current_value)) {
