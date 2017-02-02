@@ -25,8 +25,8 @@ function ica_event_process_prefill(&$form, $form_state) {
   global $user;
 
   $prefill_cross_page = array(
-    array(ICA_MEMBER_ORGANISATION                             , ICA_ORGANISATION_PREFIX . 'organization_name'),
-    array(ICA_MEMBER_ORGANISATION                             , ICA_ORGANISATION_PREFIX . 'badge'),
+    array(ICA_MEMBER_ORGANISATION                             , ICA_ORGANISATION_PREFIX .  'organization_name'),
+    array(ICA_MEMBER_ORGANISATION                             , ICA_REGISTRANT_ORG_BADGE),
     array(ICA_GENERAL_COUNTRY                                 , ICA_ORGANISATION_PREFIX . 'country'),
     array(ICA_ORGANISATION_PREFIX . 'street_address'          , ICA_BILLING_PREFIX . 'street_address'),
     array(ICA_ORGANISATION_PREFIX . 'supplemental_address_1'  , ICA_BILLING_PREFIX . 'supplemental_address_1'),
@@ -34,7 +34,6 @@ function ica_event_process_prefill(&$form, $form_state) {
     array(ICA_ORGANISATION_PREFIX . 'postal_code'             , ICA_BILLING_PREFIX . 'postal_code'),
     array(ICA_ORGANISATION_PREFIX . 'city'                    , ICA_BILLING_PREFIX . 'city'),
     array(ICA_ORGANISATION_PREFIX . 'country'                 , ICA_BILLING_PREFIX . 'country'),
-    array(ICA_ORGANISATION_PREFIX . 'organization_name'       , ICA_REGISTRANT_ORG_BADGE),
   );
 
   $prefill_same_page = array(
