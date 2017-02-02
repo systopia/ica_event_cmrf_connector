@@ -45,7 +45,14 @@ function ica_event_process_prefill(&$form, $form_state) {
 
   // run cross-page prefill on the form data
   $current_values = ica_event_get_form_values($form, $form_state);
+  // error_log("storage: " . $form_state['storage']['submitted'][76]);
+  // error_log("values: " . $form_state['values']['submitted'][76]);
+  // error_log("input: " . $form_state['input']['submitted']['billing_street_address']);
+  // error_log("current: " . $current_values['billing_street_address']);
   foreach ($prefill_cross_page as $source_field_name => $target_field_name) {
+    if (!empty($current_values[$target_field_name])) {
+      continue; // no prefill for existing values
+    }
     if (substr($source_field_name, 0, 9) == 'CONSTANT:') {
       $current_value = substr($source_field_name, 9);
     } elseif (!empty($current_values[$source_field_name])) {
@@ -55,7 +62,7 @@ function ica_event_process_prefill(&$form, $form_state) {
     }
     
     if (!empty($current_value)) {
-      _ica_event_do_prefill($form, $current_value, $target_field_name);
+      $form['submitted'][$target_field_name]['#default_value'] = $current_value;
     }
   }
 
@@ -70,13 +77,3 @@ function ica_event_process_prefill(&$form, $form_state) {
   }
 }
 
-
-function _ica_event_do_prefill(&$form, $value, $field_name) {
-  // only if target is being rendered:
-  if (isset($form['submitted'][$field_name])) {
-    // only if it's not already set
-    if (empty($form['submitted'][$field_name]['#value'])) {
-      $form['submitted'][$field_name]['#value'] = $value;
-    }
-  }
-}

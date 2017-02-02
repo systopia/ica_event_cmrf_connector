@@ -166,7 +166,7 @@ function ica_event_get_form_values(&$form, &$form_state) {
   // first, extract values from $form_state
   $webform = $form['#node']->webform;
   $components = $webform['components'];
-  $form_state_values = array('values/submitted', 'input/submitted', 'storage/submitted');
+  $form_state_values = array('storage/submitted', 'values/submitted', 'input/submitted');
 
   foreach ($form_state_values as $value_path) {
     $path_elements = explode('/', $value_path);
