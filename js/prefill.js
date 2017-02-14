@@ -132,13 +132,16 @@
         var current_value = $(this).val();
         if (!current_value || current_value.length == 0) {
           console.log("SET " + organization_badge);
-          setFieldValue('registrant_organisation_badge', organization_badge);
+          $(this).val(organization_badge);
         }
       });
     }
 
     // catch ALL change events on table for processing
     $("body").change(processMatrixFieldChange);
+    $(document).ready(function(e) {
+      processMatrixFieldChange(e);
+    })
     // $("article[id^=node-").change(processMatrixFieldChange);
     // $("table[id^=edit-group_registration_table]").change(processMatrixFieldChange);
   });
