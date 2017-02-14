@@ -135,6 +135,9 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   } else {
     // Main contact NOT attending
     $main_registration['participant_role'] = array('Main Contact');
+    $main_registration['_class'] = 'not_attending';
+    $main_registration['participant_fee_amount'] = 0;
+    $main_registration['participant_fee_level'] = 'Not Attending';
   }
   $registrations['main'] = $main_registration;
 
