@@ -78,11 +78,11 @@
       'registrant_formal_title': 2,
       'registrant_first_name': 3,
       'registrant_last_name': 4,
-      'registrant_badge_name': 5,
+      'registrant_badge': 5,
       'registrant_organisation_badge': 9,
       'partner_first_name': 13,
       'partner_last_name': 14,
-      'partner_badge_name': 15,
+      'partner_badge': 15,
     };
 
 
@@ -119,7 +119,7 @@
           var last_name    = getFieldValue(prefix + 'last_name', row);
           
           var badge_name = formal_title + " " + first_name + " " + last_name;
-          setFieldValue(prefix + 'badge_name', row, badge_name.trim());
+          setFieldValue(prefix + 'badge', row, badge_name.trim());
         }
       }
 

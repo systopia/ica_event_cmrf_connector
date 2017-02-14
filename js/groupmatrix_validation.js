@@ -19,7 +19,7 @@
     var partner_prefix = 12;
     var partner_first_name = 13;
     var partner_last_name = 14;
-    var partner_badge_name = 15;
+    var partner_badge = 15;
 
     function validateForm() {
       // SELECT select[name='submitted[group_registration_table][*][<partner>]']
@@ -34,7 +34,7 @@
             $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().parent().show(200);
             $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").parent().parent().show(200);
             $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").parent().parent().show(200);
-            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().parent().show(200);
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge + "]']").parent().parent().show(200);
 
             // validate fields
             var prefix_field = $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']");
@@ -58,7 +58,7 @@
               last_name_field.addClass("ica-warning");
             }
 
-            var badge_name_field = $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']");
+            var badge_name_field = $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge + "]']");
             if (badge_name_field.val().replace(/ +/g, "").length) {
               badge_name_field.removeClass("ica-warning");
             } else {
@@ -71,7 +71,7 @@
             $("select[name='submitted[group_registration_table][" + row + "][" + partner_prefix + "]']").parent().parent().hide(200);
             $("input[name='submitted[group_registration_table][" + row + "][" + partner_first_name + "]']").parent().parent().hide(200);
             $("input[name='submitted[group_registration_table][" + row + "][" + partner_last_name + "]']").parent().parent().hide(200);
-            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge_name + "]']").parent().parent().hide(200);
+            $("input[name='submitted[group_registration_table][" + row + "][" + partner_badge + "]']").parent().parent().hide(200);
           }
         });
     }
