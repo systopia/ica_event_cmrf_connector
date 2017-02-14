@@ -107,8 +107,7 @@
     }
 
     function processMatrixFieldChange(e) {
-      console.log(e.target.name);
-      if (e.target.name.match(/^submitted\[group_registration_table\]\[\d+\]\[\d+\]$/)) {
+      if (e && e.target.name.match(/^submitted\[group_registration_table\]\[\d+\]\[\d+\]$/)) {
         var ids = e.target.name.match(/\[\d+\]\[\d+\]$/)[0].split(/[\[\]]/);
         var row = ids[1];
         var index = ids[3];
@@ -139,9 +138,7 @@
 
     // catch ALL change events on table for processing
     $("body").change(processMatrixFieldChange);
-    $(document).ready(function(e) {
-      processMatrixFieldChange(e);
-    })
+    $(document).ready(processMatrixFieldChange(null));
     // $("article[id^=node-").change(processMatrixFieldChange);
     // $("table[id^=edit-group_registration_table]").change(processMatrixFieldChange);
   });
