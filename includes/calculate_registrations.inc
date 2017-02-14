@@ -107,7 +107,13 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   }
   $main_registration = $classes[$class]; 
   ica_event_copy_fields($main_registration, $current_values, $ica_event_registration_properties, ICA_REGISTRANT_PREFIX);
-  $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
+  
+  // see if the contact is attending
+  if ($registration_type == ICA_REGISTRATION_TYPE_INDVDL) {
+    $main_contact_attending = TRUE;
+  } else {
+    $main_contact_attending = ica_event_get_value(ICA_REGISTRANT_ATTENDING, $current_values);
+  }  
 
   // add the partner
   $main_contact_has_partner = ica_event_get_value(ICA_EVENT_PARTNER, $current_values);
