@@ -87,8 +87,6 @@ function ica_event_process_prefill(&$form, $form_state) {
       $organization_badge = '';
       if (!empty($current_values[ICA_REGISTRANT_ORG_BADGE])) {
         $organization_badge = $current_values[ICA_REGISTRANT_ORG_BADGE];
-      } else {
-        $organization_badge = '';
       }
       drupal_add_js(array('ica_event_cmrf_connector' => array(
         'variables' => array(

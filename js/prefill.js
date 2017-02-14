@@ -107,7 +107,7 @@
     }
 
     function processMatrixFieldChange(e) {
-      // console.log(e.target.name);
+      console.log(e.target.name);
       if (e.target.name.match(/^submitted\[group_registration_table\]\[\d+\]\[\d+\]$/)) {
         var ids = e.target.name.match(/\[\d+\]\[\d+\]$/)[0].split(/[\[\]]/);
         var row = ids[1];
@@ -125,16 +125,16 @@
       }
 
       // also, just fill all the (remaining) badge fields
-      var organization_badge = Drupal.settings.ica_event_cmrf_connector.variables.organization_badge;
-      console.log(organization_badge);
-      console.log("input[name$='][" + matrix_index['registrant_organisation_badge'] + "]'");
-      $("input[name$='][" + matrix_index['registrant_organisation_badge'] + "]'").each(function() {
-        var current_value = $(this).val();
-        if (!current_value || current_value.length == 0) {
-          console.log("SET " + organization_badge);
-          setFieldValue('registrant_organisation_badge', organization_badge);
-        }
-      });
+      // var organization_badge = Drupal.settings.ica_event_cmrf_connector.variables.organization_badge;
+      // console.log(organization_badge);
+      // console.log("input[name$='][" + matrix_index['registrant_organisation_badge'] + "]'");
+      // $("input[name$='][" + matrix_index['registrant_organisation_badge'] + "]'").each(function() {
+      //   var current_value = $(this).val();
+      //   if (!current_value || current_value.length == 0) {
+      //     console.log("SET " + organization_badge);
+      //     setFieldValue('registrant_organisation_badge', organization_badge);
+      //   }
+      // });
     }
 
     // catch ALL change events on table for processing
