@@ -37,8 +37,8 @@ function ica_event_process_prefill(&$form, $form_state) {
   );
 
   $prefill_same_page = array(
+    ICA_REGISTRANT_ORG_BADGE,
     ICA_REGISTRANT_PREFIX . 'badge',
-    ICA_REGISTRANT_PREFIX . 'organisation_badge',
     ICA_PARTNER_PREFIX    . 'badge',
     ICA_REGISTRANT_PREFIX . 'email',
     ICA_EVENT_MATRIX);
@@ -84,7 +84,18 @@ function ica_event_process_prefill(&$form, $form_state) {
   foreach ($prefill_same_page as $field_name) {
     if (isset($form['submitted'][$field_name])) {
       // element is there => attach JS
-      drupal_add_js(array('ica_event_cmrf_connector' => array('variables' => array('email' => $user->mail))), 'setting');
+      $organization_badge = '';
+      if (!empty($current_values[ICA_REGISTRANT_ORG_BADGE])) {
+        $organization_badge = $current_values[ICA_REGISTRANT_ORG_BADGE];
+      } else {
+        $organization_badge = '';
+      }
+      drupal_add_js(array('ica_event_cmrf_connector' => array(
+        'variables' => array(
+          'email'              => $user->mail,
+          'organization_badge' => $organization_badge,
+          )
+        )), 'setting');
       $form['#attached']['js'][] = drupal_get_path('module', 'ica_event_cmrf_connector') . '/js/prefill.js';
       break;
     }

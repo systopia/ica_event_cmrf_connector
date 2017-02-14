@@ -79,6 +79,7 @@
       'registrant_first_name': 3,
       'registrant_last_name': 4,
       'registrant_badge_name': 5,
+      'registrant_organisation_badge': 9,
       'partner_first_name': 13,
       'partner_last_name': 14,
       'partner_badge_name': 15,
@@ -122,6 +123,18 @@
           setFieldValue(prefix + 'badge_name', row, badge_name.trim());
         }
       }
+
+      // also, just fill all the (remaining) badge fields
+      var organization_badge = Drupal.settings.ica_event_cmrf_connector.variables.organization_badge;
+      console.log(organization_badge);
+      console.log("input[name$='][" + matrix_index['registrant_organisation_badge'] + "]'");
+      $("input[name$='][" + matrix_index['registrant_organisation_badge'] + "]'").each(function() {
+        var current_value = $(this).val();
+        if (!current_value || current_value.length == 0) {
+          console.log("SET " + organization_badge);
+          setFieldValue('registrant_organisation_badge', organization_badge);
+        }
+      });
     }
 
     // catch ALL change events on table for processing
