@@ -68,7 +68,11 @@ function ica_event_process_prefill(&$form, $form_state) {
     // resolve organisation ID
     if ($current_value && $source_field_name == ICA_MEMBER_ORGANISATION) {
       include_once('optionlists.inc');
-      $current_value = ica_member_get_organisation_short($current_value);
+      if ($target_field_name == ICA_REGISTRANT_ORG_BADGE) {
+        $current_value = ica_member_get_organisation($current_value, TRUE);
+      } else {
+        $current_value = ica_member_get_organisation($current_value);
+      }
     }
     
     if (!empty($current_value)) {

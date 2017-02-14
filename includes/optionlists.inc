@@ -70,12 +70,12 @@ function ica_member_organisations() {
  * get the name of an organisation by ID
  *  if possible, return the acronym
  */
-function ica_member_get_organisation_short($organisation_id) {
+function ica_member_get_organisation($organisation_id, $acronym=FALSE) {
   $organisations = ica_member_organisations();
   $full_name = $organisations[$organisation_id];
   
   // try to find an acronym
-  if (preg_match('/\((?P<acronym>\w+)\)$/', $full_name, $matches)) {
+  if ($acronym && preg_match('/\((?P<acronym>\w+)\)$/', $full_name, $matches)) {
     return $matches['acronym'];
   } else {
     return $full_name;
