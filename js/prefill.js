@@ -117,20 +117,21 @@
           var formal_title = getFieldValue(prefix + 'formal_title', row);
           var first_name   = getFieldValue(prefix + 'first_name', row);
           var last_name    = getFieldValue(prefix + 'last_name', row);
-          
+
           var badge_name = formal_title + " " + first_name + " " + last_name;
           setFieldValue(prefix + 'badge', row, badge_name.trim());
         }
       }
 
       // also, just fill all the (remaining) badge fields
-      var organization_badge = Drupal.settings.ica_event_cmrf_connector.variables.organization_badge;
-      $("input[name$='][" + matrix_index['registrant_organisation_badge'] + "]']").each(function() {
-        var current_value = $(this).val();
-        if (!current_value || current_value.length == 0) {
-          $(this).val(organization_badge);
-        }
-      });
+      // DISABLED: see ICA-5245
+      // var organization_badge = Drupal.settings.ica_event_cmrf_connector.variables.organization_badge;
+      // $("input[name$='][" + matrix_index['registrant_organisation_badge'] + "]']").each(function() {
+      //   var current_value = $(this).val();
+      //   if (!current_value || current_value.length == 0) {
+      //     $(this).val(organization_badge);
+      //   }
+      // });
     }
 
     // catch ALL change events on table for processing
