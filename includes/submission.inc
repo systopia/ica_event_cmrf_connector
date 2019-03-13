@@ -44,7 +44,7 @@ function ica_event_process_submission($node, $submission_data) {
   $submission['submission_date']         = date('YmdHis');
   $submission['registration_id']         = ICA_EVENT_SUBMISSION_PREFIX . "-{$submission_data->nid}-{$submission_data->sid}";
   $submission['registration_language']   = $language->name;
-  $submission['event_id']                = ICA_CIVICRM_EVENT_ID;
+  //$submission['event_id']                = ICA_CIVICRM_EVENT_ID; // not needed, default is set by receiver
   $submission['payment_mode']            = $submitted_values[ICA_PAYMENT_MODE];
   $submission['additional_participants'] = array();
 

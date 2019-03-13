@@ -17,11 +17,10 @@
  */
 
 // constants: general
-define('ICA_EVENT_SUBMISSION_PREFIX',  'GA2017');
+define('ICA_EVENT_SUBMISSION_PREFIX',  'GA2019');
 define('ICA_EVENT_FORM_IDS',           'webform_client_form_1,webform_client_form_3,webform_client_form_5');
-define('ICA_REGISTRANT_COUNTRY_LOCAL', 'MY');
+define('ICA_REGISTRANT_COUNTRY_LOCAL', 'RW');
 define('ICA_DEFAULT_CURRENCY',         'EUR');
-define('ICA_CIVICRM_EVENT_ID',         '3');
 
 
 // active fields
