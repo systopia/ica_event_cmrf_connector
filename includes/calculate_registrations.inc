@@ -73,6 +73,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
   $organisation_id    = ica_event_get_value(ICA_MEMBER_ORGANISATION, $current_values);
   $registrant_country = ica_event_get_value(ICA_REGISTRANT_COUNTRY, $current_values);
   $registration_type  = ica_event_get_value(ICA_REGISTRATION_TYPE, $current_values);
+  $local_countries    = explode(',', ICA_REGISTRANT_COUNTRY_LOCAL);
   
 
   // FIRST: create organisation
@@ -93,7 +94,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
     // YOUNG PARTICIPANT
     $class = 'youth';
 
-  } elseif ($registrant_country == ICA_REGISTRANT_COUNTRY_LOCAL) {
+  } elseif (in_array($registrant_country, $local_countries)) {
     // LOCAL PARTICIPANT
     $class = 'local';
 
@@ -151,7 +152,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
         // YOUNG PARTICIPANT
         $class = 'youth';
 
-      } elseif ($registrant_country == ICA_REGISTRANT_COUNTRY_LOCAL) {
+      } elseif (in_array($registrant_country, $local_countries)) {
         // LOCAL PARTICIPANT
         $class = 'local';
 
