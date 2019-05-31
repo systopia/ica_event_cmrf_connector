@@ -91,6 +91,7 @@ $ica_event_registration_properties = array(
         'position'               => 'job_title',
         'languages'              => 'custom_languages_spoken',
         'represents'             => 'custom_represented_organisation',
+        'represents_id'          => 'custom_member_number',
         'badge'                  => 'custom_badge',
         'organisation_badge'     => 'custom_organisation_badge',
         'comments'               => 'participant_note',
