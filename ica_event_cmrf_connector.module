@@ -76,6 +76,30 @@ function ica_event_cmrf_connector_form_alter(&$form, $form_state, $form_id) {
     if (isset($form['submitted'][ICA_EVENT_MATRIX])) {
       $form['#attached']['js'][] = drupal_get_path('module', 'ica_event_cmrf_connector') . "/js/groupmatrix_validation.js";
       $form['#attached']['css'][] = drupal_get_path('module', 'ica_event_cmrf_connector') . "/css/groupmatrix_validation.css";
+
+      // Since Webform Matrix Component only validates mandatory fields for the
+      // first row, make mandatory fields required in all rows.
+      foreach ($form['#node']->webform['components'] as $cid => $component) {
+        if ($component['form_key'] == ICA_EVENT_MATRIX) {
+          $element = $form['submitted'][ICA_EVENT_MATRIX];
+          for ($prow = 1; $prow <= $form_state[ICA_EVENT_MATRIX]['temp_matrix_rows']; $prow++) {
+            if (isset($component['extra']['element'])) {
+              foreach ($component['extra']['element'] as $elekey => $elevalue) {
+                list($j, $i) = explode('-', $elekey);
+                // If component is mandatory.
+                $required = $component['mandatory'] ? TRUE : FALSE;
+
+                if (!$required) {
+                  // If particular element is manadatory.
+                  $required = $elevalue['mandatory'] ? TRUE : FALSE;
+                }
+                $element[$prow][$i]['#required'] = $required;
+                $form['submitted'][ICA_EVENT_MATRIX] = $element;
+              }
+            }
+          }
+        }
+      }
     }
 
     // insert lookup logic for discount code

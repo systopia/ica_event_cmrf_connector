@@ -26,6 +26,18 @@
 function ica_event_cmrf_connector_install() {
 
   // Do some things on install, like setting the module weight.
+  // Get the weight of the module we want to compare against
+  $result = db_select('system', 's')
+    ->fields('s', array('weight'))
+    ->condition('name', 'webform_matrix_component', '=')
+    ->execute();
+  $weight = !empty($result) ? $result->fetchField() : 0;
+
+  // Set our module to a weight 1 heavier, so ours moves lower in execution order
+  db_update('system')
+    ->fields(array('weight' => $weight + 1))
+    ->condition('name', 'ica_event_cmrf_connector', '=')
+    ->execute();
 }
 
 /**
@@ -34,4 +46,23 @@ function ica_event_cmrf_connector_install() {
 function ica_event_cmrf_connector_uninstall() {
 
   // Do some things on uninstall, like deleting all variables.
+}
+
+/**
+ * Adjust module weight for hook implementations to run after
+ * webform_matrix_component module's implementations.
+ */
+function ica_event_cmrf_connector_update_7002() {
+  // Get the weight of the module we want to compare against
+  $result = db_select('system', 's')
+    ->fields('s', array('weight'))
+    ->condition('name', 'webform_matrix_component', '=')
+    ->execute();
+  $weight = !empty($result) ? $result->fetchField() : 0;
+
+  // Set our module to a weight 1 heavier, so ours moves lower in execution order
+  db_update('system')
+    ->fields(array('weight' => $weight + 1))
+    ->condition('name', 'ica_event_cmrf_connector', '=')
+    ->execute();
 }
