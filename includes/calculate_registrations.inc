@@ -172,6 +172,9 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
         $registration['custom_represented_organisation'] = $main_registration['custom_represented_organisation'];
       }
 
+      // Filter invalid language values ("0" for unchecked radio buttons).
+      $registration['custom_languages_spoken'] = array_filter($registration['custom_languages_spoken']);
+
       if (ica_event_contact_valid($registration)) {
         // main contact is valid -> add
         $registrations[$registrant_key] = $registration;
