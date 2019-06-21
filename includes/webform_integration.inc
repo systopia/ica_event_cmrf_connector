@@ -84,26 +84,28 @@ $ica_event_matrix_fields_group_registration = array(
 
 global $ica_event_registration_properties;
 $ica_event_registration_properties = array(
-        'first_name'             => 'first_name', 
-        'last_name'              => 'last_name',
-        'organization_name'      => 'organization_name',
-        'prefix'                 => 'prefix_id', 
-        'position'               => 'job_title',
-        'languages'              => 'custom_languages_spoken',
-        'represents'             => 'custom_represented_organisation',
-        'represents_id'          => 'custom_member_number',
-        'badge'                  => 'custom_badge',
-        'organisation_badge'     => 'custom_organisation_badge',
-        'comments'               => 'participant_note',
-        'email'                  => 'email',
-        'phone'                  => 'phone',
-        'street_address'         => 'street_address',
-        'supplemental_address_1' => 'supplemental_address_1',
-        'supplemental_address_2' => 'supplemental_address_2',
-        'postal_code'            => 'postal_code',
-        'city'                   => 'city',
-        'country'                => 'country',
-        );
+  'first_name'               => 'first_name',
+  'last_name'                => 'last_name',
+  'organization_name'        => 'organization_name',
+  'prefix'                   => 'prefix_id',
+  'position'                 => 'job_title',
+  'languages'                => 'custom_languages_spoken',
+  'represents'               => 'custom_represented_organisation',
+  'represents_id'            => 'custom_member_number',
+  'badge'                    => 'custom_badge',
+  'organisation_badge'       => 'custom_organisation_badge',
+  'comments'                 => 'participant_note',
+  'email'                    => 'email',
+  'phone'                    => 'phone',
+  'street_address'           => 'street_address',
+  'supplemental_address_1'   => 'supplemental_address_1',
+  'supplemental_address_2'   => 'supplemental_address_2',
+  'postal_code'              => 'postal_code',
+  'city'                     => 'city',
+  'country'                  => 'country',
+  'gdpr_consent'             => 'custom_gdpr_consent',
+  'gdpr_photo_video_consent' => 'custom_gdpr_photo_video',
+);
 
 /**
  * translate a the matrix's indices to field_names using $ica_event_matrix_fields constant
