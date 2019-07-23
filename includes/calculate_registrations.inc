@@ -48,7 +48,7 @@ function ica_event_calculate_registrations($current_values, $matrix_data) {
                             'contact_type'             => 'Individual',
                             'participant_status'       => 'Registered',
                             'participant_role'         => array('Participant'),
-                            'participant_fee_level'    => 'Local Member'),
+                            'participant_fee_level'    => 'Africa participant'),
     'youth'       => array( 'participant_fee_amount'   => ica_event_get_registration_fee('youth'),
                             'participant_fee_currency' => ICA_DEFAULT_CURRENCY,
                             '_class'                   => 'youth',
