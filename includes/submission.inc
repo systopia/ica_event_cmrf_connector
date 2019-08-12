@@ -118,6 +118,29 @@ function ica_event_process_submission($node, $submission_data) {
 
         $order_wrapper->commerce_line_items[] = $line_item;
       }
+
+      // Add a customer profile reference.
+      $customer_billing = commerce_customer_profile_new('billing', $order->id);
+      // TODO: Add commerce_customer_address field to billing object.
+      $customer_billing->commerce_customer_address = array($language->language => array(
+        0 => array(
+          'country' => '',
+          'name_line' => '',
+          'first_name' => '',
+          'last_name' => '',
+          'organisation_name' => '',
+          'administrative_area' => '',
+          'sub_administrative_area' => '',
+          'locality' => '',
+          'dependent_locality' => '',
+          'postal_code' => '',
+          'thoroughfare' => '',
+          'premise' => '',
+          'sub_premise' => '',
+          'data' => '',
+        )));
+      commerce_customer_profile_save($customer_billing);
+      $order->commerce_customer_billing[$language->language][0]['profile_id'] = $customer_billing->profile_id;
       
       commerce_order_save($order);
       // commerce_cart_order_session_save($order->order_id);
