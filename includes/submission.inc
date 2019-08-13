@@ -120,27 +120,24 @@ function ica_event_process_submission($node, $submission_data) {
       }
 
       // Add a customer profile reference.
-      $customer_billing = commerce_customer_profile_new('billing', $order->id);
-      // TODO: Add commerce_customer_address field to billing object.
-      $customer_billing->commerce_customer_address = array($language->language => array(
-        0 => array(
-          'country' => '',
-          'name_line' => '',
-          'first_name' => '',
-          'last_name' => '',
-          'organisation_name' => '',
-          'administrative_area' => '',
-          'sub_administrative_area' => '',
-          'locality' => '',
-          'dependent_locality' => '',
-          'postal_code' => '',
-          'thoroughfare' => '',
-          'premise' => '',
-          'sub_premise' => '',
-          'data' => '',
-        )));
-      commerce_customer_profile_save($customer_billing);
-      $order->commerce_customer_billing[$language->language][0]['profile_id'] = $customer_billing->profile_id;
+      $customer_profile = commerce_customer_profile_new('billing', $order->uid);
+      $customer_profile_wrapper = entity_metadata_wrapper('commerce_customer_profile', $customer_profile);
+      // Add commerce_customer_address field to billing object.
+      $customer_profile_wrapper->commerce_customer_address->country = $submitted_values['billing_country'];
+      $customer_profile_wrapper->commerce_customer_address->name_line = $submitted_values['organisation_organization_name']; // Contents of a primary NameLine element in the xNL XML.
+      $customer_profile_wrapper->commerce_customer_address->first_name = ''; // Contents of the FirstName element of a primary PersonName element in the xNL XML.
+      $customer_profile_wrapper->commerce_customer_address->last_name = ''; // Contents of the LastName element of a primary PersonName element in the xNL XML.
+      $customer_profile_wrapper->commerce_customer_address->organisation_name = $submitted_values['organisation_organization_name']; // Contents of a primary OrganisationName element in the xNL XML.
+      $customer_profile_wrapper->commerce_customer_address->administrative_area = ''; // The administrative area of this address. (i.e. State/Province)
+      $customer_profile_wrapper->commerce_customer_address->sub_administrative_area = ''; // The sub administrative area of this address.
+      $customer_profile_wrapper->commerce_customer_address->locality = $submitted_values['billing_city']; // The locality of this address. (i.e. City)
+      $customer_profile_wrapper->commerce_customer_address->dependent_locality = ''; // The dependent locality of this address.
+      $customer_profile_wrapper->commerce_customer_address->postal_code = $submitted_values['billing_postal_code']; // The postal code of this address.
+      $customer_profile_wrapper->commerce_customer_address->thoroughfare = $submitted_values['billing_street_address']; // The thoroughfare of this address. (i.e. Street address)
+      $customer_profile_wrapper->commerce_customer_address->premise = $submitted_values['billing_supplemental_address_1']; // The premise of this address. (i.e. Apartment / Suite number)
+      $customer_profile_wrapper->commerce_customer_address->sub_premise = $submitted_values['billing_supplemental_address_2']; // The sub_premise of this address.
+      commerce_customer_profile_save($customer_profile);
+      $order_wrapper->commerce_customer_billing = $customer_profile->profile_id;
       
       commerce_order_save($order);
       // commerce_cart_order_session_save($order->order_id);
