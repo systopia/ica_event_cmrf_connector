@@ -12,6 +12,6 @@ dependencies[] = commerce_product_reference
 
 # version information
 project = "ica_event_cmrf_connector"
-version = "7.x-1.3"
-datestamp = "1566204605"
+version = "7.x-1.x-dev"
+datestamp = ""
 
